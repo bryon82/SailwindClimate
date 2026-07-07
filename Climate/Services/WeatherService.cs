@@ -2,12 +2,15 @@
 
 namespace Climate
 {
+    /// <summary>
+    /// Provides weather-related services such as temperature, pressure, humidity, wind chill, heat index, and dew point calculations.
+    /// </summary>
     public class WeatherService
     {
         /// <summary>
         /// Gets the barometric pressure normalized to the range of 26 - 31.9 inHg.
         /// </summary>
-        /// <returns>A float in the range of 0 - 1.</returns>
+        /// <returns>A float in the range of 0 - 1 representing the pressure.</returns>
         public static float GetNormalizedPressure()
         {
             return PressureService.GetNormalizedPressure();
@@ -16,15 +19,17 @@ namespace Climate
         /// <summary>
         /// Gets the barometric pressure in millibars.
         /// </summary>
+        /// <returns>A float representing the pressure in millibars.</returns>
         public static float GetPressureMb()
         {
             var pressure = PressureService.GetPressure();
-            return pressure * 33.8639f;
+            return ConvertInHgToMb(pressure);
         }
 
         /// <summary>
         /// Gets the barometric pressure in inches of mercury.
         /// </summary>
+        /// <returns>A float representing the pressure in inches of mercury.</returns>
         public static float GetPressureInHg()
         {
             return PressureService.GetPressure();
@@ -34,7 +39,7 @@ namespace Climate
         /// Gets the temperature normalized to the range of 10 - 115 °F.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
-        /// <returns>A float in the range of 0 - 1.</returns>
+        /// <returns>A float in the range of 0 - 1 representing the temperature..</returns>
         public static float GetNormalizedTemperature(Vector3 coords)
         {
             return TemperatureService.GetNormalizedTemperature(coords);
@@ -44,6 +49,7 @@ namespace Climate
         /// Gets the temperature in degrees Farenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
+        /// <returns>A float representing the temperature in degrees Farenheit.</returns>
         public static float GetTemperatureF(Vector3 coords)
         {
             return TemperatureService.GetTemperature(coords);
@@ -53,19 +59,32 @@ namespace Climate
         /// Gets the temperature in degrees Celcius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
+        /// <returns>A float representing the temperature in degrees Celcius.</returns>
         public static float GetTemperatureC(Vector3 coords)
         {
             return TemperatureService.GetTemperatureC(coords);
         }
 
         /// <summary>
+        /// Gets the temperature in degrees Kelvin.
+        /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
+        /// <returns>A float representing the temperature in degrees Kelvin.</returns>
+        public static float GetTemperatureK(Vector3 coords)
+        {
+            var tempC = TemperatureService.GetTemperatureC(coords);
+            return ConvertCtoK(tempC);
+        }
+
+        /// <summary>
         /// Gets the wind chill in degrees Farenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
+        /// <returns>A float representing the wind chill in degrees Farenheit.</returns>
         public static float GetWindChillF(Vector3 coords)
         {
             var tempF = TemperatureService.GetTemperature(coords);
-            var windSpeedMph = Wind.currentWind.magnitude * 1.150779f; // Convert knots to mph
+            var windSpeedMph = ConvertKnotsToMph(Wind.currentWind.magnitude);
             if (tempF > 50f || windSpeedMph < 3f)
                 return tempF;
 
@@ -76,6 +95,7 @@ namespace Climate
         /// Gets the wind chill in degrees Celcius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
+        /// <returns>A float representing the wind chill in degrees Celcius.</returns>
         public static float GetWindChillC(Vector3 coords)
         {
             var windChillF = GetWindChillF(coords);
@@ -86,6 +106,7 @@ namespace Climate
         /// Gets the heat index in degrees Farenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
+        /// <returns>A float representing the heat index in degrees Farenheit.</returns>
         public static float GetHeatIndexF(Vector3 coords)
         {
             var tempF = TemperatureService.GetTemperature(coords);
@@ -100,6 +121,7 @@ namespace Climate
         /// Gets the heat index in degrees Celcius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
+        /// <returns>A float representing the heat index in degrees Celcius.</returns>
         public static float GetHeatIndexC(Vector3 coords)
         {
             var heatIndexF = GetHeatIndexF(coords);
@@ -110,10 +132,12 @@ namespace Climate
         /// Gets the apparent temperature in degrees Farenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
-        public static float GetApparentTemperatureF(Vector3 coords, float windSpeedMph)
+        /// <returns>A float representing the apparent temperature in degrees Farenheit.</returns>
+        public static float GetApparentTemperatureF(Vector3 coords)
         {
             var tempF = TemperatureService.GetTemperature(coords);
             var humidity = HumidityService.GetRelativeHumidity(coords);
+            var windSpeedMph = ConvertKnotsToMph(Wind.currentWind.magnitude);
             if (tempF <= 50f && windSpeedMph >= 3f)
                 return GetWindChill(tempF, windSpeedMph);
             if (tempF >= 80f && humidity >= 40f)
@@ -125,9 +149,10 @@ namespace Climate
         /// Gets the apparent temperature in degrees Celcius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
-        public static float GetApparentTemperatureC(Vector3 coords, float windSpeedMph)
+        /// <returns>A float representing the apparent temperature in degrees Celcius.</returns>
+        public static float GetApparentTemperatureC(Vector3 coords)
         {
-            var apparentTempF = GetApparentTemperatureF(coords, windSpeedMph);
+            var apparentTempF = GetApparentTemperatureF(coords);
             return ConvertFtoC(apparentTempF);
         }
 
@@ -135,6 +160,7 @@ namespace Climate
         /// Gets the relative humidity.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the humidity.</param>
+        /// <returns>A float representing the relative humidity.</returns>
         public static float GetRelativeHumidity(Vector3 coords)
         {
             return HumidityService.GetRelativeHumidity(coords);
@@ -144,6 +170,7 @@ namespace Climate
         /// Gets the dew point in degrees Celcius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew point.</param>
+        /// <returns>A float representing the dew point in degrees Celcius.</returns>
         public static float GetDewPointC(Vector3 coords)
         {
             return DewPointService.GetDewPointC(coords);
@@ -153,11 +180,15 @@ namespace Climate
         /// Gets the dew point in degrees Farenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew point.</param>
+        /// <returns>A float representing the dew point in degrees Farenheit.</returns>
         public static float GetDewPointF(Vector3 coords)
         {
             var dewPointC = DewPointService.GetDewPointC(coords);
             return ConvertCtoF(dewPointC);
         }
+
+
+        //// Helper calculations
 
         private static float GetWindChill(float tempF, float windSpeedMph)
         {
@@ -186,9 +217,24 @@ namespace Climate
             return tempC * 9f / 5f + 32f;
         }
 
+        private static float ConvertCtoK(float tempC)
+        {
+            return tempC + 273.15f;
+        }
+
         private static float ConvertFtoC(float tempF)
         {
             return (tempF - 32f) * 5f / 9f;
+        }
+
+        private static float ConvertKnotsToMph(float knots)
+        {
+            return knots * 1.150779f;
+        }
+
+        private static float ConvertInHgToMb(float inHg)
+        {
+            return inHg * 33.8639f;
         }
     }
 }
