@@ -1,16 +1,20 @@
 # Climate
+
 Adds regional climates and instruments to measure them to the game.  
 
 ## Regional Climates
+
 Each region will have a baseline climate. This climate will vary daily as well as change throughout the day. Storms will affect the climate also.  
 
 ## Instruments
+
 The thermometer and hygrometer values are based on the regional climates added to the game.  
 
 The values read from the barometer are purely based on how close you are to the nearest storm. A value of 29.7 inHg means you are at the outer edges of a storm and will start to experience rain. A value of 27.65 inHg means that you are in the storm wall and should be experiencing very stormy weather. A value of 26 inHg means you are at the center of the storm.  
 
 ## For Other Mod Authors
-The WeatherService class offers many different functions to retrieve climate related values if you would like to use any rweather related data from this mod.  
+
+The [WeatherService](https://github.com/bryon82/SailwindClimate/blob/main/Climate/Services/WeatherService.cs) class offers many different functions to retrieve climate related values if you would like to use any weather related data from this mod.  
 
 I use prefab directory indexes 820 - 822.  
 

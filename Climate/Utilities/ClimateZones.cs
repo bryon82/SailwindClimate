@@ -26,7 +26,7 @@ namespace Climate
         public static readonly ClimateProfile AlAnkh = new ClimateProfile(baseTempF: 82f, tempAmplitude: 29f, baseDewC: -2f);
         public static readonly ClimateProfile Emerald = new ClimateProfile(baseTempF: 86f, tempAmplitude: 5.5f, baseDewC: 26f);
         public static readonly ClimateProfile Aestrin = new ClimateProfile(baseTempF: 63f, tempAmplitude: 11f, baseDewC: 8f);
-        public static readonly ClimateProfile NewPort = new ClimateProfile(baseTempF: 75f, tempAmplitude: 9f, baseDewC: 14f);
+        public static readonly ClimateProfile NewPort = new ClimateProfile(baseTempF: 75f, tempAmplitude: 9f, baseDewC: 14f); // trade wind transition zone
         public static readonly ClimateProfile FireFish = new ClimateProfile(baseTempF: 89f, tempAmplitude: 4f, baseDewC: 26f);
 
         public static ClimateProfile GetProfile(Vector3 coords)
