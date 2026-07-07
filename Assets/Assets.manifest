@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3020897755
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: meteorology_tools
+      Dependencies: {}
