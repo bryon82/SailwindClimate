@@ -27,7 +27,7 @@ namespace Climate
                 pressure = Mathf.Lerp(27.65f, 29.7f, NormalizedDistanceToStorm);
             }
             return pressure;
-        }        
+        }
 
         internal static float GetNormalizedPressure()
         {
