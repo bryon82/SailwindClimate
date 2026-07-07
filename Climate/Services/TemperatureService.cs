@@ -29,6 +29,6 @@ namespace Climate
         {
             var tempF = GetTemperature(coords);
             return Mathf.InverseLerp(minTempF, maxTempF, tempF);
-        }           
+        }
     }
 }
