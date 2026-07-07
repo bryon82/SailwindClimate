@@ -8,6 +8,8 @@ Each region will have a baseline climate. This climate will vary daily as well a
 
 ## Instruments
 
+All instruments can be bought in Gold Rock City, Dragon Cliffs, and Ft. Aestrin near where navigation equipment is sold.  
+
 The thermometer and hygrometer values are based on the regional climates added to the game.  
 
 The values read from the barometer are purely based on how close you are to the nearest storm. A value of 29.7 inHg means you are at the outer edges of a storm and will start to experience rain. A value of 27.65 inHg means that you are in the storm wall and should be experiencing very stormy weather. A value of 26 inHg means you are at the center of the storm.  
