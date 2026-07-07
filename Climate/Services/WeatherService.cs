@@ -78,7 +78,7 @@ namespace Climate
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
         public static float GetWindChillC(Vector3 coords)
         {
-            var windChillF = GetWindChill(coords);
+            var windChillF = GetWindChillF(coords);
             return ConvertFtoC(windChillF);
         }
 
@@ -102,7 +102,7 @@ namespace Climate
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
         public static float GetHeatIndexC(Vector3 coords)
         {
-            var heatIndexF = GetHeatIndex(coords);
+            var heatIndexF = GetHeatIndexF(coords);
             return ConvertFtoC(heatIndexF);
         }
 
@@ -127,7 +127,7 @@ namespace Climate
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
         public static float GetApparentTemperatureC(Vector3 coords, float windSpeedMph)
         {
-            var apparentTempF = GetApparentTemperature(coords, windSpeedMph);
+            var apparentTempF = GetApparentTemperatureF(coords, windSpeedMph);
             return ConvertFtoC(apparentTempF);
         }
 
