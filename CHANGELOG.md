@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 - Add GetCurrent versions of all functions in WeatherService.
 
 ### Updated
-- Internal temp calculations to use Celcius instead of Farenheit.
+- Internal temp calculations to use Celsius instead of Fahrenheit.
 
 ## [v0.1.0] - 2026-07-07
 

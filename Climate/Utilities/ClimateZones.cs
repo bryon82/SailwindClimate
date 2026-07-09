@@ -27,7 +27,7 @@ namespace Climate
 
     public static class ClimateZones
     {
-        // Climate profiles for different regions. Temps in celcius
+        // Climate profiles for different regions. Temps in Celsius
         public static readonly ClimateProfile AlAnkh = new ClimateProfile(28f, 16f, -2f, 6f, 2f);
         public static readonly ClimateProfile Emerald = new ClimateProfile(30f, 3f, 25f, 1.5f, 1f);
         public static readonly ClimateProfile Aestrin = new ClimateProfile(17f, 6f, 8f, 8f, 6f);

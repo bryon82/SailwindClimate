@@ -53,12 +53,12 @@ namespace Climate
             GetNormalizedTemperature(coords, Sun.sun.localTime, GameState.day);
 
         /// <summary>
-        /// Gets the temperature in degrees Celcius.
+        /// Gets the temperature in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the temperature in degrees Celcius.</returns>
+        /// <returns>A float representing the temperature in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
         /// </exception>
@@ -70,20 +70,20 @@ namespace Climate
         }
 
         /// <summary>
-        /// Gets the current temperature in degrees Celcius.
+        /// Gets the current temperature in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
-        /// <returns>A float representing the temperature in degrees Celcius.</returns>
+        /// <returns>A float representing the temperature in degrees Celsius.</returns>
         public static float GetCurrentTemperatureC(Vector3 coords) =>
             GetTemperatureC(coords, Sun.sun.localTime, GameState.day);
 
         /// <summary>
-        /// Gets the temperature in degrees Farenheit.
+        /// Gets the temperature in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the temperature in degrees Farenheit.</returns>
+        /// <returns>A float representing the temperature in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
         /// </exception>
@@ -91,20 +91,20 @@ namespace Climate
             ConvertCtoF(GetTemperatureC(coords, time, day));
 
         /// <summary>
-        /// Gets the current temperature in degrees Farenheit.
+        /// Gets the current temperature in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
-        /// <returns>A float representing the temperature in degrees Farenheit.</returns>
+        /// <returns>A float representing the temperature in degrees Fahrenheit.</returns>
         public static float GetCurrentTemperatureF(Vector3 coords) => ConvertCtoF(GetCurrentTemperatureC(coords));
 
         /// <summary>
-        /// Gets the wind chill in degrees Celcius.
+        /// Gets the wind chill in degrees Celsius.
         /// </summary>
         /// <param name="windSpeedKnots">The wind speed in knots.</param>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the wind chill in degrees Celcius.</returns>
+        /// <returns>A float representing the wind chill in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="windSpeedKnots"/> is negative, <paramref name="time"/> is not within 0-24,
         /// or <paramref name="day"/> is negative.
@@ -113,20 +113,20 @@ namespace Climate
             ConvertFtoC(GetWindChillF(windSpeedKnots, coords, time, day));
 
         /// <summary>
-        /// Gets the current wind chill in degrees Celcius.
+        /// Gets the current wind chill in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
-        /// <returns>A float representing the wind chill in degrees Celcius.</returns>
+        /// <returns>A float representing the wind chill in degrees Celsius.</returns>
         public static float GetCurrentWindChillC(Vector3 coords) => ConvertFtoC(GetCurrentWindChillF(coords));
 
         /// <summary>
-        /// Gets the wind chill in degrees Farenheit.
+        /// Gets the wind chill in degrees Fahrenheit.
         /// </summary>
         /// <param name="windSpeedKnots">The wind speed in knots.</param>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the wind chill in degrees Farenheit.</returns>
+        /// <returns>A float representing the wind chill in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="windSpeedKnots"/> is negative, <paramref name="time"/> is not within 0-24,
         /// or <paramref name="day"/> is negative.
@@ -146,20 +146,20 @@ namespace Climate
         }
 
         /// <summary>
-        /// Gets the current wind chill in degrees Farenheit.
+        /// Gets the current wind chill in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
-        /// <returns>A float representing the wind chill in degrees Farenheit.</returns>
+        /// <returns>A float representing the wind chill in degrees Fahrenheit.</returns>
         public static float GetCurrentWindChillF(Vector3 coords) =>
             GetWindChillF(Wind.currentWind.magnitude, coords, Sun.sun.localTime, GameState.day);
 
         /// <summary>
-        /// Gets the heat index in degrees Celcius.
+        /// Gets the heat index in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the heat index in degrees Celcius.</returns>
+        /// <returns>A float representing the heat index in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
         /// </exception>
@@ -167,20 +167,20 @@ namespace Climate
             ConvertFtoC(GetHeatIndexF(coords, time, day));
 
         /// <summary>
-        /// Gets the current heat index in degrees Celcius.
+        /// Gets the current heat index in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
-        /// <returns>A float representing the heat index in degrees Celcius.</returns>
+        /// <returns>A float representing the heat index in degrees Celsius.</returns>
         public static float GetCurrentHeatIndexC(Vector3 coords) =>
             ConvertFtoC(GetCurrentHeatIndexF(coords));
 
         /// <summary>
-        /// Gets the heat index in degrees Farenheit.
+        /// Gets the heat index in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the heat index in degrees Farenheit.</returns>
+        /// <returns>A float representing the heat index in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
         /// </exception>
@@ -198,21 +198,21 @@ namespace Climate
         }
 
         /// <summary>
-        /// Gets the current heat index in degrees Farenheit.
+        /// Gets the current heat index in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
-        /// <returns>A float representing the heat index in degrees Farenheit.</returns>
+        /// <returns>A float representing the heat index in degrees Fahrenheit.</returns>
         public static float GetCurrentHeatIndexF(Vector3 coords) =>
             GetHeatIndexF(coords, Sun.sun.localTime, GameState.day);
 
         /// <summary>
-        /// Gets the apparent temperature in degrees Celcius.
+        /// Gets the apparent temperature in degrees Celsius.
         /// </summary>
         /// <param name="windSpeedKnots">The wind speed in knots.</param>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the apparent temperature in degrees Celcius.</returns>
+        /// <returns>A float representing the apparent temperature in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
         /// </exception>
@@ -220,21 +220,21 @@ namespace Climate
             ConvertFtoC(GetApparentTemperatureF(windSpeedKnots, coords, time, day));
 
         /// <summary>
-        /// Gets the current apparent temperature in degrees Celcius.
+        /// Gets the current apparent temperature in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
-        /// <returns>A float representing the apparent temperature in degrees Celcius.</returns>
+        /// <returns>A float representing the apparent temperature in degrees Celsius.</returns>
         public static float GetCurrentApparentTemperatureC(Vector3 coords) =>
             ConvertFtoC(GetCurrentApparentTemperatureF(coords));
 
         /// <summary>
-        /// Gets the apparent temperature in degrees Farenheit.
+        /// Gets the apparent temperature in degrees Fahrenheit.
         /// </summary>
         /// <param name="windSpeedKnots">The wind speed in knots.</param>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the apparent temperature in degrees Farenheit.</returns>
+        /// <returns>A float representing the apparent temperature in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
         /// </exception>
@@ -254,10 +254,10 @@ namespace Climate
         }
 
         /// <summary>
-        /// Gets the current apparent temperature in degrees Farenheit.
+        /// Gets the current apparent temperature in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
-        /// <returns>A float representing the apparent temperature in degrees Farenheit.</returns>
+        /// <returns>A float representing the apparent temperature in degrees Fahrenheit.</returns>
         public static float GetCurrentApparentTemperatureF(Vector3 coords) =>
             GetApparentTemperatureF(Wind.currentWind.magnitude, coords, Sun.sun.localTime, GameState.day);
 
@@ -287,11 +287,11 @@ namespace Climate
             HumidityService.GetRelativeHumidity(coords, Sun.sun.localTime, GameState.day);
 
         /// <summary>
-        /// Gets the dew-point in degrees Celcius.
+        /// Gets the dew-point in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew-point.</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the dew-point in degrees Celcius.</returns>
+        /// <returns>A float representing the dew-point in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="day"/> is negative.</exception>
         public static float GetDewPointC(Vector3 coords, int day)
         {
@@ -300,26 +300,26 @@ namespace Climate
         }
 
         /// <summary>
-        /// Gets the current dew-point in degrees Celcius.
+        /// Gets the current dew-point in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew-point.</param>
-        /// <returns>A float representing the dew-point in degrees Celcius.</returns>
+        /// <returns>A float representing the dew-point in degrees Celsius.</returns>
         public static float GetCurrentDewPointC(Vector3 coords) => GetDewPointC(coords, GameState.day);
 
         /// <summary>
-        /// Gets the dew-point in degrees Farenheit.
+        /// Gets the dew-point in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew-point.</param>
         /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
-        /// <returns>A float representing the dew-point in degrees Farenheit.</returns>
+        /// <returns>A float representing the dew-point in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="day"/> is negative.</exception>
         public static float GetDewPointF(Vector3 coords, int day) => ConvertCtoF(GetDewPointC(coords, day));
 
         /// <summary>
-        /// Gets the current dew-point in degrees Farenheit.
+        /// Gets the current dew-point in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew-point.</param>
-        /// <returns>A float representing the dew-point in degrees Farenheit.</returns>
+        /// <returns>A float representing the dew-point in degrees Fahrenheit.</returns>
         public static float GetCurrentDewPointF(Vector3 coords) => ConvertCtoF(GetCurrentDewPointC(coords));
 
 
