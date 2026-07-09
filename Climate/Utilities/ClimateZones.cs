@@ -4,40 +4,77 @@ namespace Climate
 {
     public readonly struct ClimateProfile
     {
-        public readonly float baseTempF;
+        public readonly float baseTemp;
         public readonly float tempAmplitude;
-        public readonly float baseDewC;
+        public readonly float baseDew;
+        public readonly float seasonalTempAmplitude;
+        public readonly float seasonalDewAmplitude;
         public readonly float tempNoiseSeed;
         public readonly float dewNoiseSeed;
 
-        public ClimateProfile(float baseTempF, float tempAmplitude, float baseDewC)
+        public ClimateProfile(float baseTemp, float tempAmplitude, float baseDew, float seasonalTempAmplitude, float seasonalDewAmplitude)
         {
-            this.baseTempF = baseTempF;
+            this.baseTemp = baseTemp;
             this.tempAmplitude = tempAmplitude;
-            this.baseDewC = baseDewC;
+            this.baseDew = baseDew;
+            this.seasonalTempAmplitude = seasonalTempAmplitude;
+            this.seasonalDewAmplitude = seasonalDewAmplitude;
             // different multipliers so temp and dew-point noise don't sync with each other
-            this.tempNoiseSeed = baseTempF * 7.31f;
-            this.dewNoiseSeed = baseDewC * 5.77f;
+            this.tempNoiseSeed = baseTemp * 7.31f;
+            this.dewNoiseSeed = baseDew * 5.77f;
         }
     }
 
     public static class ClimateZones
     {
-        public static readonly ClimateProfile AlAnkh = new ClimateProfile(baseTempF: 82f, tempAmplitude: 29f, baseDewC: -2f);
-        public static readonly ClimateProfile Emerald = new ClimateProfile(baseTempF: 86f, tempAmplitude: 5.5f, baseDewC: 26f);
-        public static readonly ClimateProfile Aestrin = new ClimateProfile(baseTempF: 63f, tempAmplitude: 11f, baseDewC: 8f);
-        public static readonly ClimateProfile NewPort = new ClimateProfile(baseTempF: 75f, tempAmplitude: 9f, baseDewC: 14f); // trade wind transition zone
-        public static readonly ClimateProfile FireFish = new ClimateProfile(baseTempF: 89f, tempAmplitude: 4f, baseDewC: 26f);
+        // Climate profiles for different regions. Temps in celcius
+        public static readonly ClimateProfile AlAnkh = new ClimateProfile(28f, 16f, -2f, 6f, 2f);
+        public static readonly ClimateProfile Emerald = new ClimateProfile(30f, 3f, 25f, 1.5f, 1f);
+        public static readonly ClimateProfile Aestrin = new ClimateProfile(17f, 6f, 8f, 8f, 6f);
+        public static readonly ClimateProfile FireFish = new ClimateProfile(32f, 2f, 27f, 1f, 1f);
+
+        const float buffer = 1f;
+        const float AlAnkhLon = -0.18f;
+        const float AestrinLat = 36f;
+        const float FireFishLat = 28.8f;
+
+        const float DaysPerYear = 365f;
+        const int PeakDay = 172;
 
         public static ClimateProfile GetProfile(Vector3 coords)
         {
-            float lat = coords.z;
-            float lon = coords.x;
-            if (lat > 33f) return Aestrin;
-            if (lon < -2f) return AlAnkh;
-            if (lat < 28f) return FireFish;
-            if (lat < 32f) return Emerald;
-            return NewPort;
+            var lat = coords.z;
+            var lon = coords.x;
+
+            ClimateProfile region;
+            if (lon > AlAnkhLon - buffer && lon < AlAnkhLon + buffer)
+            {
+                var t = Mathf.InverseLerp(AlAnkhLon - buffer, AlAnkhLon + buffer, lon);
+                region = Lerp(AlAnkh, Emerald, t);
+            }
+            else if (lon < AlAnkhLon) region = AlAnkh;
+            else if (lat < FireFishLat) region = FireFish;
+            else region = Emerald;
+                        
+            if (lat > AestrinLat - buffer && lat < AestrinLat + buffer)
+            {
+                var t2 = Mathf.InverseLerp(AestrinLat - buffer, AestrinLat + buffer, lat);
+                return Lerp(region, Aestrin, t2);
+            }
+            return lat > AestrinLat ? Aestrin : region;
+        }
+
+        static ClimateProfile Lerp(ClimateProfile a, ClimateProfile b, float t) =>
+            new ClimateProfile(Mathf.Lerp(a.baseTemp, b.baseTemp, t),
+                Mathf.Lerp(a.tempAmplitude, b.tempAmplitude, t),
+                Mathf.Lerp(a.baseDew, b.baseDew, t),
+                Mathf.Lerp(a.seasonalTempAmplitude, b.seasonalTempAmplitude, t),
+                Mathf.Lerp(a.seasonalDewAmplitude, b.seasonalDewAmplitude, t));
+
+        internal static float GetSeasonalFactor(int day)
+        {
+            var dayOfYear = day % 365;
+            return Mathf.Cos(2f * Mathf.PI * (dayOfYear - PeakDay) / DaysPerYear);
         }
     }
 }

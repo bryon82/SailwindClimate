@@ -6,7 +6,7 @@ namespace Climate
     public class ShipItemThermometer : ShipItem
     {
         private Transform needle;
-        
+
         private float minAngle;
         private float maxAngle;
         private float smoothingK;
@@ -42,7 +42,7 @@ namespace Climate
         private void SampleTemp()
         {
             var coords = FloatingOriginManager.instance.GetGlobeCoords(transform);
-            temperature = TemperatureService.GetNormalizedTemperature(coords);
+            temperature = TemperatureService.GetNormalizedTemperature(coords, Sun.sun.localTime, GameState.day);
         }
 
         private void UpdateNeedle()

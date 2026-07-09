@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 namespace Climate
 {
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
-    public class Cli_Plugin : BaseUnityPlugin
+    public class Climate_Plugin : BaseUnityPlugin
     {
         public const string PLUGIN_GUID = "com.raddude.climate";
         public const string PLUGIN_NAME = "Climate";
-        public const string PLUGIN_VERSION = "0.1.0";
+        public const string PLUGIN_VERSION = "0.2.0";
 
-        internal static Cli_Plugin Instance { get; private set; }
+        internal static Climate_Plugin Instance { get; private set; }
         private static ManualLogSource _logger;
 
         internal static void LogDebug(string message) => _logger.LogDebug(message);

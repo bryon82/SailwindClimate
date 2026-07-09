@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cli_Plugin.cs" />
+    <Compile Include="Climate_Plugin.cs" />
     <Compile Include="Patches\PressurePatches.cs" />
     <Compile Include="Patches\PrefabLoadingPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

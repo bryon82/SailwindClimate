@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Climate.Cli_Plugin;
+using static Climate.Climate_Plugin;
 
 namespace Climate
 {

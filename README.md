@@ -1,6 +1,6 @@
 # Climate
 
-Adds regional climates and instruments to measure them to the game.  
+Adds regional climates and instruments to measure them to the game. This does not add visual clime effects.  
 
 ## Regional Climates
 

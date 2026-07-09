@@ -36,17 +36,17 @@ namespace Climate
                 sampleTimer = 0f;
                 SampleHumidity();
             }
-            
+
             UpdateNeedle();
         }
 
         private void SampleHumidity()
         {
             var coords = FloatingOriginManager.instance.GetGlobeCoords(transform);
-            humidity = HumidityService.GetRelativeHumidity(coords);
+            humidity = HumidityService.GetRelativeHumidity(coords, Sun.sun.localTime, GameState.day);
         }
 
-        void UpdateNeedle()
+        private void UpdateNeedle()
         {
             if (needle == null)
                 return;

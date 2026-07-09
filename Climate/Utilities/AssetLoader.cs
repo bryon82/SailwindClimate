@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using static Climate.Cli_Plugin;
+using static Climate.Climate_Plugin;
 
 namespace Climate
 {

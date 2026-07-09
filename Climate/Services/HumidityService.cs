@@ -4,23 +4,23 @@ namespace Climate
 {
     internal static class HumidityService
     {
-        internal static float GetRelativeHumidity(Vector3 coords)
+        internal static float GetRelativeHumidity(Vector3 coords, float time, int day)
         {
-            float tempC = TemperatureService.GetTemperatureC(coords);
-            float dewC = DewPointService.GetDewPointC(coords);
+            var temp = TemperatureService.GetTemperature(coords, time, day);
+            var dew = DewPointService.GetDewPoint(coords, day);
 
             // Dew point can never physically exceed air temperature
-            dewC = Mathf.Min(dewC, tempC);
+            dew = Mathf.Min(dew, temp);
 
-            return Mathf.Clamp(MagnusRH(tempC, dewC), 0.05f, 1f);
+            return Mathf.Clamp(MagnusRH(temp, dew), 0.05f, 1f);
         }
 
-        private static float MagnusRH(float tempC, float dewC)
+        private static float MagnusRH(float temp, float dew)
         {
             const float a = 17.625f;
             const float b = 243.04f;
-            float numerator = Mathf.Exp((a * dewC) / (b + dewC));
-            float denominator = Mathf.Exp((a * tempC) / (b + tempC));
+            var numerator = Mathf.Exp((a * dew) / (b + dew));
+            var denominator = Mathf.Exp((a * temp) / (b + temp));
             return numerator / denominator;
         }
     }
