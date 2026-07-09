@@ -5,8 +5,8 @@ All notable changes to this project will be documented in this file.
 ## [v0.2.0] - 2026-07-09
 
 ### Added
-- Add blending of major climate zones at the borders.
-- Add GetCurrent versions of all functions in WeatherService.
+- Blending of major climate zones at the borders.
+- GetCurrent versions of all functions in WeatherService.
 
 ### Updated
 - Internal temp calculations to use Celsius instead of Fahrenheit.
