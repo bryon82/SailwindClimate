@@ -1,10 +1,12 @@
 # Climate
 
-Adds regional climates and instruments to measure them to the game. This does not add visual clime effects.  
+Adds regional climates (currently only temperature and dew-point for humidity) and instruments to measure them to the game. This does not add visual clime effects.  
 
 ## Regional Climates
 
-Each region will have a baseline climate. This climate will vary daily as well as change throughout the day. Storms will affect the climate also.  
+Each region (Al'Ankh, Emerald Archipelago, Aestrin, and Fire Fish Lagoon)will have a baseline climate. This climate will vary daily as well as change throughout the day and seasonally. Seasons are based of off the northern hemisphere seasonal schedule. The game has a running day count which seasons are based off of, day 0 and day 365 are January 1.  
+
+Storms will affect the climate also. When closer to a storm center the temperature will go down which will also increase the humidity.  
 
 ## Instruments
 
