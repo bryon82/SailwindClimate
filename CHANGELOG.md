@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.0] - 2026-07-13
+
+### Updated
+- Temperature to be based off of latitude.
+
 ## [v0.2.0] - 2026-07-09
 
 ### Added
