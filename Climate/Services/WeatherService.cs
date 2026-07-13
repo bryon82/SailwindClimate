@@ -240,6 +240,7 @@ namespace Climate
         /// </exception>
         public static float GetApparentTemperatureF(float windSpeedKnots, Vector3 coords, float time, int day)
         {
+            ValidateWindSpeed(windSpeedKnots);
             ValidateTime(time);
             ValidateDay(day);
 
