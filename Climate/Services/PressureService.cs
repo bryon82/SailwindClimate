@@ -8,6 +8,9 @@ namespace Climate
         internal static float NormalizedDistanceToStorm { get; set; }
         internal static float CurrentStormRange { get; set; }
 
+        const float MIN_PRESSURE = 26f;
+        const float MAX_PRESSURE = 31.9f;
+
         internal static float GetPressure()
         {
             float pressure;
@@ -15,12 +18,12 @@ namespace Climate
             {
                 var distanceToStorm = Mathf.Clamp01(
                     (WeatherStorms.currentStormDistance - CurrentStormRadius - CurrentStormRange) / 12000f);
-                pressure = Mathf.Lerp(29.7f, 31.9f, distanceToStorm);
+                pressure = Mathf.Lerp(29.7f, MAX_PRESSURE, distanceToStorm);
             }
             else if (NormalizedDistanceToStorm <= 0f)
             {
                 var distanceToCenter = Mathf.Clamp01(WeatherStorms.currentStormDistance / CurrentStormRadius);
-                pressure = Mathf.Lerp(26f, 27.65f, distanceToCenter);
+                pressure = Mathf.Lerp(MIN_PRESSURE, 27.65f, distanceToCenter);
             }
             else
             {
@@ -32,7 +35,7 @@ namespace Climate
         internal static float GetNormalizedPressure()
         {
             var pressure = GetPressure();
-            return Mathf.InverseLerp(26f, 31.9f, pressure);
+            return Mathf.InverseLerp(MIN_PRESSURE, MAX_PRESSURE, pressure);
         }
 
         internal static bool IsNearStorm()

@@ -23,45 +23,45 @@ namespace Climate
         }
     }
 
-    public static class ClimateZones
+    internal static class ClimateZones
     {
         // Climate profiles for different regions. Temps in Celsius
-        public static readonly ClimateProfile AlAnkh = new ClimateProfile(16f, -2f, 6f, 2f);
-        public static readonly ClimateProfile Emerald = new ClimateProfile(3f, 26f, 1.5f, 1f);
-        public static readonly ClimateProfile Aestrin = new ClimateProfile(6f, 8f, 8f, 6f);
+        internal static readonly ClimateProfile AlAnkh = new ClimateProfile(16f, -2f, 6f, 2f);
+        internal static readonly ClimateProfile Emerald = new ClimateProfile(3f, 26f, 1.5f, 1f);
+        internal static readonly ClimateProfile Aestrin = new ClimateProfile(6f, 8f, 8f, 6f);
 
-        const float buffer = 1f;
-        const float AlAnkhLon = -0.18f;
-        const float AestrinLat = 36f;
+        const float BUFFER = 1.5f;
+        const float AA_EA_LON = -0.18f;
+        const float AESTRIN_LAT = 35.2f;
 
-        const float DaysPerYear = 365f;
-        const int PeakDay = 172;
+        const float DAYS_PER_YEAR = 365f;
+        const int PEAK_DAY = 172;
 
-        public static ClimateProfile GetProfile(Vector3 coords)
+        internal static ClimateProfile GetProfile(Vector3 coords)
         {
             var lat = coords.z;
             var lon = coords.x;
 
             ClimateProfile region;
-            if (lon > AlAnkhLon - buffer && lon < AlAnkhLon + buffer)
+            if (lon > AA_EA_LON - BUFFER && lon < AA_EA_LON + BUFFER)
             {
-                var t = Mathf.InverseLerp(AlAnkhLon - buffer, AlAnkhLon + buffer, lon);
+                var t = Mathf.InverseLerp(AA_EA_LON - BUFFER, AA_EA_LON + BUFFER, lon);
                 region = Lerp(AlAnkh, Emerald, t);
             }
-            else if (lon < AlAnkhLon) 
+            else if (lon < AA_EA_LON) 
                 region = AlAnkh;
             else 
                 region = Emerald;
 
-            if (lat > AestrinLat - buffer && lat < AestrinLat + buffer)
+            if (lat > AESTRIN_LAT - BUFFER && lat < AESTRIN_LAT + BUFFER)
             {
-                var t2 = Mathf.InverseLerp(AestrinLat - buffer, AestrinLat + buffer, lat);
+                var t2 = Mathf.InverseLerp(AESTRIN_LAT - BUFFER, AESTRIN_LAT + BUFFER, lat);
                 return Lerp(region, Aestrin, t2);
             }
-            return lat > AestrinLat ? Aestrin : region;
+            return lat > AESTRIN_LAT ? Aestrin : region;
         }
 
-        static ClimateProfile Lerp(ClimateProfile a, ClimateProfile b, float t) =>
+        private static ClimateProfile Lerp(ClimateProfile a, ClimateProfile b, float t) =>
             new ClimateProfile(Mathf.Lerp(a.tempAmplitude, b.tempAmplitude, t),
                 Mathf.Lerp(a.baseDew, b.baseDew, t),
                 Mathf.Lerp(a.seasonalTempAmplitude, b.seasonalTempAmplitude, t),
@@ -69,8 +69,8 @@ namespace Climate
 
         internal static float GetSeasonalFactor(int day)
         {
-            var dayOfYear = day % 365;
-            return Mathf.Cos(2f * Mathf.PI * (dayOfYear - PeakDay) / DaysPerYear);
+            var dayOfYear = day % DAYS_PER_YEAR;
+            return Mathf.Cos(2f * Mathf.PI * (dayOfYear - PEAK_DAY) / DAYS_PER_YEAR);
         }
     }
 }

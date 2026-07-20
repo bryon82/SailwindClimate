@@ -5,30 +5,32 @@ namespace Climate
 {
     public class ShipItemBarometer : ShipItem
     {
-        [SerializeField]
-        private Transform needle;
+        private Transform _needle;
 
-        private float minAngle;
-        private float maxAngle;
-        private float smoothedAngle;
-        private float smoothingK;
+        private float _minAngle;
+        private float _maxAngle;
+        private float _smoothingK;
+
+        private float _pressure;
+        private float _smoothedAngle;
 
         public override void OnLoad()
         {
-            needle = gameObject.GetComponentsInChildren<Transform>(true).Where(t => t.name == "Needle").FirstOrDefault();
-            minAngle = -118f;
-            maxAngle = 240f;
-            smoothingK = -6f;
+            _needle = gameObject.GetComponentsInChildren<Transform>(true).Where(t => t.name == "Needle").FirstOrDefault();
+            _minAngle = -118f;
+            _maxAngle = 240f;
+            _smoothingK = -6f;
         }
 
         public override void ExtraLateUpdate()
         {
-            if (needle == null)
+            if (_needle == null)
                 return;
 
-            var targetAngle = Mathf.Lerp(minAngle, maxAngle, PressureService.GetNormalizedPressure());
-            smoothedAngle = Mathf.Lerp(smoothedAngle, targetAngle, 1f - Mathf.Exp(smoothingK * Time.deltaTime));
-            needle.localRotation = Quaternion.Euler(smoothedAngle, -90f, 90f);
+            _pressure = PressureService.GetNormalizedPressure();
+            var targetAngle = Mathf.Lerp(_minAngle, _maxAngle, _pressure);
+            _smoothedAngle = Mathf.Lerp(_smoothedAngle, targetAngle, 1f - Mathf.Exp(_smoothingK * Time.deltaTime));
+            _needle.localRotation = Quaternion.Euler(_smoothedAngle, -90f, 90f);
         }
     }
 }

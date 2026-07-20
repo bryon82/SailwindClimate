@@ -4,13 +4,13 @@ namespace Climate
 {
     internal static class DewPointService
     {
-        const float NoiseAmplitude = 3f;
+        const float NOISE_AMP = 3f;
 
         internal static float GetDewPoint(Vector3 coords, int day)
         {
             var region = ClimateZones.GetProfile(coords);
             var seasonal = ClimateZones.GetSeasonalFactor(day) * region.seasonalDewAmplitude;
-            var noise = (Mathf.PerlinNoise(day * 0.10f, region.dewNoiseSeed) - 0.5f) * 2f * NoiseAmplitude;
+            var noise = (Mathf.PerlinNoise(day * 0.10f, region.dewNoiseSeed) - 0.5f) * 2f * NOISE_AMP;
 
             return region.baseDew + seasonal + noise;
         }
