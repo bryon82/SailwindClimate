@@ -7,25 +7,82 @@ namespace Climate
     /// Provides weather-related services such as temperature, pressure, humidity, wind chill, heat 
     /// index, and dew-point calculations.
     /// </summary>
-    public class WeatherService
+    public static class WeatherService
     {
+        /// <summary>
+        /// Gets the barometric pressure normalized to the range of 26 - 31.9 inHg. The defaulted parameter 
+        /// <paramref name="includeStorm"/> is there in case you want to look at a specific day's pressure, 
+        /// which then you would set it to false as we can't predict a future storm.
+        /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="includeStorm">Whether to include the effect of the current storm. Default is true.</param>
+        /// <returns>A float in the range of 0 - 1 representing the pressure.</returns>
+        public static float GetNormalizedPressure(Vector3 coords, int day, bool includeStorm = true) => 
+            PressureService.GetNormalizedPressure(coords, day, includeStorm);
+
         /// <summary>
         /// Gets the current barometric pressure normalized to the range of 26 - 31.9 inHg.
         /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
         /// <returns>A float in the range of 0 - 1 representing the pressure.</returns>
-        public static float GetCurrentNormalizedPressure() => PressureService.GetNormalizedPressure();
+        public static float GetNormalizedPressure(Vector3 coords) => GetNormalizedPressure(coords, DayNow);
+
+        /// <summary>
+        /// Gets the current barometric pressure normalized to the range of 26 - 31.9 inHg at the players position.
+        /// </summary>
+        /// <returns>A float in the range of 0 - 1 representing the pressure.</returns>
+        public static float GetNormalizedPressure() => GetNormalizedPressure(PlayerPos);
+
+        /// <summary>
+        /// Gets the barometric pressure in millibars. The defaulted parameter <paramref name="includeStorm"/> 
+        /// is there in case you want to look at a specific day's pressure, which then you would set it to false
+        /// as we can't predict a future storm.
+        /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="includeStorm">Whether to include the effect of the current storm. Default is true.</param>
+        /// <returns>A float representing the pressure in millibars.</returns>
+        public static float GetPressureMb(Vector3 coords, int day, bool includeStorm = true) =>
+            ConvertInHgToMb(GetPressureInHg(coords, day, includeStorm));
 
         /// <summary>
         /// Gets the current barometric pressure in millibars.
         /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
         /// <returns>A float representing the pressure in millibars.</returns>
-        public static float GetCurrentPressureMb() => ConvertInHgToMb(GetCurrentPressureInHg());
+        public static float GetPressureMb(Vector3 coords) => ConvertInHgToMb(GetPressureInHg(coords));
+
+        /// <summary>
+        /// Gets the current barometric pressure in millibars at the players position.
+        /// </summary>
+        /// <returns>A float representing the pressure in millibars.</returns>
+        public static float GetPressureMb() => ConvertInHgToMb(GetPressureInHg(PlayerPos));
+
+        /// <summary>
+        /// Gets the barometric pressure in inches of mercury. The defaulted parameter <paramref name="includeStorm"/> 
+        /// is there in case you want to look at a specific day's pressure, which then you would set it to false
+        /// as we can't predict a future storm.
+        /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="includeStorm">Whether to include the effect of the current storm. Default is true.</param>
+        /// <returns>A float representing the pressure in inches of mercury.</returns>
+        public static float GetPressureInHg(Vector3 coords, int day, bool includeStorm = true) => 
+            PressureService.GetPressure(coords, day, includeStorm);
 
         /// <summary>
         /// Gets the current barometric pressure in inches of mercury.
         /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
         /// <returns>A float representing the pressure in inches of mercury.</returns>
-        public static float GetCurrentPressureInHg() => PressureService.GetPressure();
+        public static float GetPressureInHg(Vector3 coords) => GetPressureInHg(coords, DayNow);
+
+        /// <summary>
+        /// Gets the current barometric pressure in inches of mercury at the players position.
+        /// </summary>
+        /// <returns>A float representing the pressure in inches of mercury.</returns>
+        public static float GetPressureInHg() => GetPressureInHg(PlayerPos, DayNow);
 
         /// <summary>
         /// Gets the temperature normalized to the range of -12.2222 - 40.1111 °C (10 - 115 °F).
@@ -49,8 +106,15 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
         /// <returns>A float in the range of 0 - 1 representing the temperature.</returns>
-        public static float GetCurrentNormalizedTemperature(Vector3 coords) =>
-            GetNormalizedTemperature(coords, Sun.sun.localTime, GameState.day);
+        public static float GetNormalizedTemperature(Vector3 coords) =>
+            GetNormalizedTemperature(coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current temperature normalized to the range of -12.2222 - 40.1111 °C (10 - 115 °F)
+        /// at the players position.
+        /// </summary>
+        /// <returns>A float in the range of 0 - 1 representing the temperature.</returns>
+        public static float GetNormalizedTemperature() => GetNormalizedTemperature(PlayerPos, TimeNow, DayNow);
 
         /// <summary>
         /// Gets the temperature in degrees Celsius.
@@ -74,8 +138,13 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
         /// <returns>A float representing the temperature in degrees Celsius.</returns>
-        public static float GetCurrentTemperatureC(Vector3 coords) =>
-            GetTemperatureC(coords, Sun.sun.localTime, GameState.day);
+        public static float GetTemperatureC(Vector3 coords) => GetTemperatureC(coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current temperature in degrees Celsius at the player's position.
+        /// </summary>
+        /// <returns>A float representing the temperature in degrees Celsius.</returns>
+        public static float GetTemperatureC() => GetTemperatureC(PlayerPos, TimeNow, DayNow);
 
         /// <summary>
         /// Gets the temperature in degrees Fahrenheit.
@@ -95,7 +164,13 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
         /// <returns>A float representing the temperature in degrees Fahrenheit.</returns>
-        public static float GetCurrentTemperatureF(Vector3 coords) => ConvertCtoF(GetCurrentTemperatureC(coords));
+        public static float GetTemperatureF(Vector3 coords) => ConvertCtoF(GetTemperatureC(coords));
+
+        /// <summary>
+        /// Gets the current temperature in degrees Fahrenheit at the player's position.
+        /// </summary>
+        /// <returns>A float representing the temperature in degrees Fahrenheit.</returns>
+        public static float GetTemperatureF() => ConvertCtoF(GetTemperatureC());
 
         /// <summary>
         /// Gets the wind chill in degrees Celsius.
@@ -117,7 +192,13 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
         /// <returns>A float representing the wind chill in degrees Celsius.</returns>
-        public static float GetCurrentWindChillC(Vector3 coords) => ConvertFtoC(GetCurrentWindChillF(coords));
+        public static float GetWindChillC(Vector3 coords) => GetWindChillC(CurrentWind, coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current wind chill in degrees Celsius at the player's position.
+        /// </summary>
+        /// <returns>A float representing the wind chill in degrees Celsius.</returns>
+        public static float GetWindChillC() => GetWindChillC(PlayerPos);
 
         /// <summary>
         /// Gets the wind chill in degrees Fahrenheit.
@@ -150,8 +231,13 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
         /// <returns>A float representing the wind chill in degrees Fahrenheit.</returns>
-        public static float GetCurrentWindChillF(Vector3 coords) =>
-            GetWindChillF(Wind.currentWind.magnitude, coords, Sun.sun.localTime, GameState.day);
+        public static float GetWindChillF(Vector3 coords) => GetWindChillF(CurrentWind, coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current wind chill in degrees Fahrenheit at the player's position.
+        /// </summary>
+        /// <returns>A float representing the wind chill in degrees Fahrenheit.</returns>
+        public static float GetWindChillF() => GetWindChillF(CurrentWind, PlayerPos, TimeNow, DayNow);
 
         /// <summary>
         /// Gets the heat index in degrees Celsius.
@@ -171,8 +257,13 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
         /// <returns>A float representing the heat index in degrees Celsius.</returns>
-        public static float GetCurrentHeatIndexC(Vector3 coords) =>
-            ConvertFtoC(GetCurrentHeatIndexF(coords));
+        public static float GetHeatIndexC(Vector3 coords) => GetHeatIndexC(coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current heat index in degrees Celsius at the player's position.
+        /// </summary>
+        /// <returns>A float representing the heat index in degrees Celsius.</returns>
+        public static float GetHeatIndexC() => GetHeatIndexC(PlayerPos);
 
         /// <summary>
         /// Gets the heat index in degrees Fahrenheit.
@@ -202,8 +293,13 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
         /// <returns>A float representing the heat index in degrees Fahrenheit.</returns>
-        public static float GetCurrentHeatIndexF(Vector3 coords) =>
-            GetHeatIndexF(coords, Sun.sun.localTime, GameState.day);
+        public static float GetHeatIndexF(Vector3 coords) => GetHeatIndexF(coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current heat index in degrees Fahrenheit at the player's position.
+        /// </summary>
+        /// <returns>A float representing the heat index in degrees Fahrenheit.</returns>
+        public static float GetHeatIndexF() => GetHeatIndexF(PlayerPos, TimeNow, DayNow);
 
         /// <summary>
         /// Gets the apparent temperature in degrees Celsius.
@@ -224,8 +320,14 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
         /// <returns>A float representing the apparent temperature in degrees Celsius.</returns>
-        public static float GetCurrentApparentTemperatureC(Vector3 coords) =>
-            ConvertFtoC(GetCurrentApparentTemperatureF(coords));
+        public static float GetApparentTemperatureC(Vector3 coords) =>
+            GetApparentTemperatureC(CurrentWind, coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current apparent temperature in degrees Celsius at the player's position.
+        /// </summary>
+        /// <returns>A float representing the apparent temperature in degrees Celsius.</returns>
+        public static float GetApparentTemperatureC() => GetApparentTemperatureC(PlayerPos);
 
         /// <summary>
         /// Gets the apparent temperature in degrees Fahrenheit.
@@ -259,8 +361,15 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
         /// <returns>A float representing the apparent temperature in degrees Fahrenheit.</returns>
-        public static float GetCurrentApparentTemperatureF(Vector3 coords) =>
-            GetApparentTemperatureF(Wind.currentWind.magnitude, coords, Sun.sun.localTime, GameState.day);
+        public static float GetApparentTemperatureF(Vector3 coords) =>
+            GetApparentTemperatureF(CurrentWind, coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current apparent temperature in degrees Fahrenheit.
+        /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
+        /// <returns>A float representing the apparent temperature in degrees Fahrenheit.</returns>
+        public static float GetApparentTemperatureF() => GetApparentTemperatureF(PlayerPos);
 
         /// <summary>
         /// Gets the relative humidity.
@@ -284,8 +393,14 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the humidity.</param>
         /// <returns>A float in the range of 0 - 1 representing the relative humidity.</returns>
-        public static float GetCurrentRelativeHumidity(Vector3 coords) =>
-            HumidityService.GetRelativeHumidity(coords, Sun.sun.localTime, GameState.day);
+        public static float GetRelativeHumidity(Vector3 coords) => GetRelativeHumidity(coords, TimeNow, DayNow);
+
+        /// <summary>
+        /// Gets the current relative humidity at the player's position.
+        /// </summary>
+        /// <param name="coords">Coordinates of the location of where to get the humidity.</param>
+        /// <returns>A float in the range of 0 - 1 representing the relative humidity.</returns>
+        public static float GetRelativeHumidity() => GetRelativeHumidity(PlayerPos);
 
         /// <summary>
         /// Gets the dew-point in degrees Celsius.
@@ -305,7 +420,13 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew-point.</param>
         /// <returns>A float representing the dew-point in degrees Celsius.</returns>
-        public static float GetCurrentDewPointC(Vector3 coords) => GetDewPointC(coords, GameState.day);
+        public static float GetDewPointC(Vector3 coords) => GetDewPointC(coords, DayNow);
+
+        /// <summary>
+        /// Gets the current dew-point in degrees Celsius at the player's position.
+        /// </summary>
+        /// <returns>A float representing the dew-point in degrees Celsius.</returns>
+        public static float GetDewPointC() => GetDewPointC(PlayerPos);
 
         /// <summary>
         /// Gets the dew-point in degrees Fahrenheit.
@@ -321,7 +442,18 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew-point.</param>
         /// <returns>A float representing the dew-point in degrees Fahrenheit.</returns>
-        public static float GetCurrentDewPointF(Vector3 coords) => ConvertCtoF(GetCurrentDewPointC(coords));
+        public static float GetDewPointF(Vector3 coords) => GetDewPointF(coords, DayNow);
+
+        /// <summary>
+        /// Gets the current dew-point in degrees Fahrenheit at the player's position.
+        /// </summary>
+        /// <returns>A float representing the dew-point in degrees Fahrenheit.</returns>
+        public static float GetDewPointF() => GetDewPointF(PlayerPos);
+
+        private static Vector3 PlayerPos => FloatingOriginManager.instance.GetGlobeCoords(Refs.observerMirror.transform);
+        private static float TimeNow => Sun.sun.localTime;
+        private static int DayNow => GameState.day;
+        private static float CurrentWind => Wind.currentWind.magnitude;
 
 
         //// Parameter validation

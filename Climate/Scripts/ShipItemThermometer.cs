@@ -5,24 +5,19 @@ namespace Climate
 {
     public class ShipItemThermometer : ShipItem
     {
+        private readonly float _minAngle = -45f;
+        private readonly float _maxAngle = 225f;        
+        private readonly float _smoothingK = -2f;        
+        private readonly float _sampleInterval = 1f;
+
         private Transform _needle;
-
-        private float _minAngle;
-        private float _maxAngle;
-        private float _smoothingK;
-        private float _sampleInterval;
-
-        private float _temperature;
-        private float _smoothedAngle;
         private float _sampleTimer;
+        private float _smoothedAngle;
+        private float _temperature;
 
         public override void OnLoad()
         {
             _needle = gameObject.GetComponentsInChildren<Transform>(true).Where(t => t.name == "Needle").FirstOrDefault();
-            _minAngle = -45f;
-            _maxAngle = 225f;
-            _smoothingK = -2f;
-            _sampleInterval = 1f;
 
             SampleTemp();
         }
