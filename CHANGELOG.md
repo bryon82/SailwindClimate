@@ -9,8 +9,8 @@ All notable changes to this project will be documented in this file.
 - Persistence of pressure cells when loading a save.
 - Radiative cooling and low pressure cooling.
 - Fog that occurs when temps drop close to the region's dew point.
-- Clouds that occurs when humidty is high enough and pressure is low enough.
-- Rain that occurs when humidty is high enough and pressure is low enough.
+- Clouds that occurs when humidity is high enough and pressure is low enough.
+- Rain that occurs when humidity is high enough and pressure is low enough.
 
 ### Updated
 - Functions in WeatherService by overloading them to get the current or current at player position values instead of having dedicated "Current" named functions.
