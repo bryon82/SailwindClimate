@@ -14,7 +14,7 @@ This replaces the base games trade winds and can be disabled in the configs. The
 
 ## Pressure Systems
 
-Six persistant large pressure systems will move in a seasonal set pattern off the edge of the map. These systems will provide the new trade winds which will shift throughout the year. These systems will also influence the pressure characteristic (High or Low), movement speed, and movement direction of pressure cells that spawn near them. These systems will also affect the baseline pressure of 29.7inHg.  
+Six persistent large pressure systems will move in a seasonal set pattern off the edge of the map. These systems will provide the new trade winds which will shift throughout the year. These systems will also influence the pressure characteristic (High or Low), movement speed, and movement direction of pressure cells that spawn near them. These systems will also affect the baseline pressure of 29.7inHg.  
 
 ## Pressure Cells
 
