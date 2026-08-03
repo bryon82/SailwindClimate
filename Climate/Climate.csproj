@@ -60,12 +60,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\SteamLibrary\steamapps\common\Sailwind\Sailwind_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\SteamLibrary\steamapps\common\Sailwind\Sailwind_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Climate_Plugin.cs" />
     <Compile Include="Models\ClimateProfile.cs" />
     <Compile Include="Models\PressureCell.cs" />
+    <Compile Include="Models\PressureSystem.cs" />
     <Compile Include="Patches\SaveLoadPatches.cs" />
+    <Compile Include="Patches\UIPatches.cs" />
     <Compile Include="Patches\WeatherPatches.cs" />
     <Compile Include="Patches\PrefabLoadingPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,9 +84,13 @@
     <Compile Include="Services\PressureService.cs" />
     <Compile Include="Services\EffectsService.cs" />
     <Compile Include="Services\TemperatureService.cs" />
-    <Compile Include="Services\WeatherService.cs" />
+    <Compile Include="API\WeatherService.cs" />
+    <Compile Include="Services\WindService.cs" />
+    <Compile Include="UI\DateTextUI.cs" />
     <Compile Include="Utilities\AssetLoader.cs" />
     <Compile Include="ClimateZones.cs" />
+    <Compile Include="Utilities\Configs.cs" />
+    <Compile Include="Utilities\IModDataSaveable.cs" />
     <Compile Include="Utilities\Items.cs" />
     <Compile Include="Utilities\ModData.cs" />
   </ItemGroup>

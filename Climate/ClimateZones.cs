@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
+using static Climate.Configs;
 
 namespace Climate
-{    
+{
     internal static class ClimateZones
     {
-        // Temps in Celsius. tempAmp, baseDew, seasonalTempAmp, seasonalDewAmp
-        internal static readonly ClimateProfile AlAnkh = new ClimateProfile(16f, -2f, 6f, 2f);
-        internal static readonly ClimateProfile Emerald = new ClimateProfile(3f, 26f, 1.5f, 1f);
-        internal static readonly ClimateProfile Aestrin = new ClimateProfile(6f, 9f, 8f, 6f);
+        // Temps in Celsius. baseDew, seasonalTempAmp, seasonalDewAmp, pressureCoolingFactor
+        internal static readonly ClimateProfile AlAnkh = new ClimateProfile(-2f, 6f, 2f, 1f);
+        internal static readonly ClimateProfile Emerald = new ClimateProfile(23f, 1.5f, 1f, 0.3f);
+        internal static readonly ClimateProfile Aestrin = new ClimateProfile(10f, 8f, 6f, 0.6f);
 
         const float BLEND_BUFFER = 1.5f;
         const float AA_EA_LON = -0.18f;
         const float AESTRIN_LAT = 35.2f;
 
-        const float DAYS_PER_YEAR = 365f;
-        const int PEAK_DAY = 172;
+        private static int PeakDay => yearLength.Value == 92 ? 43 : 172;
 
         internal static ClimateProfile GetProfile(Vector3 coords)
         {
@@ -41,15 +41,16 @@ namespace Climate
         }
 
         private static ClimateProfile Lerp(ClimateProfile a, ClimateProfile b, float t) =>
-            new ClimateProfile(Mathf.Lerp(a.tempAmplitude, b.tempAmplitude, t),
+            new ClimateProfile(
                 Mathf.Lerp(a.baseDew, b.baseDew, t),
                 Mathf.Lerp(a.seasonalTempAmplitude, b.seasonalTempAmplitude, t),
-                Mathf.Lerp(a.seasonalDewAmplitude, b.seasonalDewAmplitude, t));
+                Mathf.Lerp(a.seasonalDewAmplitude, b.seasonalDewAmplitude, t),
+                Mathf.Lerp(a.pressureCoolingFactor, b.pressureCoolingFactor, t));
 
         internal static float GetSeasonalFactor(int day)
         {
-            var dayOfYear = day % DAYS_PER_YEAR;
-            return Mathf.Cos(2f * Mathf.PI * (dayOfYear - PEAK_DAY) / DAYS_PER_YEAR);
+            var dayOfYear = day % yearLength.Value;
+            return Mathf.Cos(2f * Mathf.PI * (dayOfYear - PeakDay) / yearLength.Value);
         }
     }
 }

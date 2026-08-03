@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Climate
+namespace Climate.API
 {
     /// <summary>
     /// Provides weather-related services such as temperature, pressure, humidity, wind chill, heat 
@@ -15,7 +15,7 @@ namespace Climate
         /// which then you would set it to false as we can't predict a future storm.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <param name="includeStorm">Whether to include the effect of the current storm. Default is true.</param>
         /// <returns>A float in the range of 0 - 1 representing the pressure.</returns>
         public static float GetNormalizedPressure(Vector3 coords, int day, bool includeStorm = true) => 
@@ -40,7 +40,7 @@ namespace Climate
         /// as we can't predict a future storm.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <param name="includeStorm">Whether to include the effect of the current storm. Default is true.</param>
         /// <returns>A float representing the pressure in millibars.</returns>
         public static float GetPressureMb(Vector3 coords, int day, bool includeStorm = true) =>
@@ -65,7 +65,7 @@ namespace Climate
         /// as we can't predict a future storm.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the pressure.</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <param name="includeStorm">Whether to include the effect of the current storm. Default is true.</param>
         /// <returns>A float representing the pressure in inches of mercury.</returns>
         public static float GetPressureInHg(Vector3 coords, int day, bool includeStorm = true) => 
@@ -89,7 +89,7 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float in the range of 0 - 1 representing the temperature.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
@@ -121,7 +121,7 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the temperature in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
@@ -151,7 +151,7 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the temperature in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
@@ -178,7 +178,7 @@ namespace Climate
         /// <param name="windSpeedKnots">The wind speed in knots.</param>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the wind chill in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="windSpeedKnots"/> is negative, <paramref name="time"/> is not within 0-24,
@@ -206,7 +206,7 @@ namespace Climate
         /// <param name="windSpeedKnots">The wind speed in knots.</param>
         /// <param name="coords">Coordinates of the location of where to get the wind chill.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the wind chill in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="windSpeedKnots"/> is negative, <paramref name="time"/> is not within 0-24,
@@ -244,7 +244,7 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the heat index in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
@@ -270,7 +270,7 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the heat index.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the heat index in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
@@ -307,7 +307,7 @@ namespace Climate
         /// <param name="windSpeedKnots">The wind speed in knots.</param>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the apparent temperature in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
@@ -335,7 +335,7 @@ namespace Climate
         /// <param name="windSpeedKnots">The wind speed in knots.</param>
         /// <param name="coords">Coordinates of the location of where to get the apparent temperature.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the apparent temperature in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
@@ -376,7 +376,7 @@ namespace Climate
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the humidity.</param>
         /// <param name="time">The time of day in hours (0 - 24).</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float in the range of 0 - 1 representing the relative humidity.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="time"/> is not within 0-24, or <paramref name="day"/> is negative.
@@ -406,7 +406,7 @@ namespace Climate
         /// Gets the dew-point in degrees Celsius.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew-point.</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the dew-point in degrees Celsius.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="day"/> is negative.</exception>
         public static float GetDewPointC(Vector3 coords, int day)
@@ -432,7 +432,7 @@ namespace Climate
         /// Gets the dew-point in degrees Fahrenheit.
         /// </summary>
         /// <param name="coords">Coordinates of the location of where to get the dew-point.</param>
-        /// <param name="day">The day. Non-negative; internally normalized to a 365-day year.</param>
+        /// <param name="day">The day. Non-negative; internally normalized to a 92-day or 365-day year.</param>
         /// <returns>A float representing the dew-point in degrees Fahrenheit.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="day"/> is negative.</exception>
         public static float GetDewPointF(Vector3 coords, int day) => ConvertCtoF(GetDewPointC(coords, day));

@@ -11,14 +11,17 @@ namespace Climate.Patches
             [HarmonyPatch("SaveModData")]
             public static void SaveModData()
             {
-                PressureService.SavePressureCells();
+                PressureCell.SavePressureCells();
+                PressureSystem.SavePressureSystems();
             }
 
             [HarmonyPrefix]
             [HarmonyPatch("LoadModData")]
             public static void LoadModData()
             {
-                PressureService.LoadPressureCells();
+                PressureCell.LoadPressureCells();
+                PressureSystem.LoadPressureSystems();
+                DateTextUI.UpdateDateText();
             }
         }
     }

@@ -7,9 +7,11 @@ namespace Climate
         const float MIN_HUMIDITY = 0.05f;
         const float MAX_HUMIDITY = 1f;
 
-        internal static float GetRelativeHumidity(Vector3 coords, float time, int day)
+        internal static float GetRelativeHumidity(Vector3 coords, float time, int day, float temp = -100f)
         {
-            var temp = TemperatureService.GetTemperature(coords, time, day);
+            if (temp == -100f)
+                temp = TemperatureService.GetTemperature(coords, time, day);
+
             var dew = DewPointService.GetDewPoint(coords, day);
 
             // Dew point can never physically exceed air temperature

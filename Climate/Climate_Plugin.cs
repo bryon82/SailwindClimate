@@ -12,7 +12,7 @@ namespace Climate
     {
         public const string PLUGIN_GUID = "com.raddude.climate";
         public const string PLUGIN_NAME = "Climate";
-        public const string PLUGIN_VERSION = "1.1.0";
+        public const string PLUGIN_VERSION = "1.2.0";
 
         internal static Climate_Plugin Instance { get; private set; }
         private static ManualLogSource _logger;
@@ -22,7 +22,20 @@ namespace Climate
         internal static void LogWarning(string message) => _logger.LogWarning(message);
         internal static void LogError(string message) => _logger.LogError(message);
 
-        internal static List<PressureCell> PressureCells => PressureService.cells;
+        internal static WindService.WindSample[,] WindGrid => WindService.windGrid;
+        internal static List<PressureCell> PressureCells => PressureCell.cells;
+        public static float FogDensity { get; internal set; }
+        public static float TargetFogDensity { get; internal set; }
+        public static float RainIntensity { get; internal set; }
+        public static float TargetRainIntensity { get; internal set; }
+        public static float CloudRate { get; internal set; }
+        public static float TargetCloudRate { get; internal set; }
+        public static bool ApplyingFogDensity { get; internal set; }
+        public static bool ApplyingRainIntensity { get; internal set; }       
+        public static bool ApplyingCloudRate { get; internal set; }
+        public static float GetMaxWindSpeed() => WindService.GetMaxWindSpeed();
+        public static float GetMinWindSpeed() => WindService.GetMinWindSpeed();
+        public static void WriteWindSpeedsToFile() => WindService.WriteSpeedsToFile();
 
         private void Awake()
         {
@@ -36,12 +49,15 @@ namespace Climate
 
             StartCoroutine(AssetLoader.LoadAssets());
 
-            //Configs.InitializeConfigs();
+            Configs.InitializeConfigs();
 
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), PLUGIN_GUID);
             SceneManager.sceneLoaded += AddShopItems.SceneLoaded;
 
-            Sun.OnNewDay += PressureService.UpdatePressureCells;
+            Sun.OnNewDay += PressureCell.UpdatePressureCells;
+            Sun.OnNewDay += PressureSystem.UpdateAllWiggles;
+            Sun.OnNewDay += WindService.UpdateDailyWindField;
+            Sun.OnNewDay += DateTextUI.UpdateDateText;
         }        
     }
 }
