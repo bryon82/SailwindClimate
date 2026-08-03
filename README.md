@@ -1,12 +1,12 @@
 # Climate
 
-Adds regional climates, pressure cells, and instruments to measure weather the game.  
+Adds regional climates, seasonal trade winds, large pressure systems, medium pressure cells, and instruments to measure weather to the game.  
 
 ## Regional Climates
 
-Each region (Al'Ankh, Emerald Archipelago, Aestrin, and Fire Fish Lagoon)will have a baseline climate. This climate will vary daily as well as change throughout the day and seasonally. Seasons are based of off the northern hemisphere seasonal schedule. The game has a running day count which seasons are based off of, day 0 and day 365 are January 1.  
+Each region (Al'Ankh, Emerald Archipelago, Aestrin, and Fire Fish Lagoon)will have a baseline climate. This climate will vary daily as well as change throughout the day and seasonally. Seasons are based of off the northern hemisphere seasonal schedule. The game has a running day count which seasons are based off of, The year length is configurable so day 0 and day 92 are the first day of the year if playing with a 92 day long year, day 0 and day 365 are the first day of the year if playing with a 365 day long year.  
 
-Storms will affect the climate also. When closer to a storm center the temperature will go down which will also increase the humidity.  
+Storms will affect the climate also. When closer to a storm center the pressure will drop, so temperature will go down, which will also increase the humidity.  
 
 ## Seasonal Trade Winds
 
