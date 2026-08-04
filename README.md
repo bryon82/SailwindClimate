@@ -35,9 +35,11 @@ All instruments can be bought in Gold Rock City, Dragon Cliffs, and Ft. Aestrin 
 
 The thermometer and hygrometer values are based on the regional climates added to the game.  
 
-The values read from the barometer are based on pressure cells and how close you are to the nearest storm. The lowest a pressure cell can lower the pressure to is 28.2inHg, anything lower than that means you are definetly in a storm. A value of 26inHg means you are at the center of the storm.  
+The values read from the barometer are based on pressure cells and how close you are to the nearest storm. The lowest a pressure cell can lower the pressure to is 28.2inHg, anything lower than that means you are definitely in a storm. A value of 26inHg means you are at the center of the storm.  
+
 <br>
-![instrumets_image](https://github.com/bryon82/SailwindClimate/tree/main/Screenshots/AestrinClearDay.png)
+
+![instruments image](https://github.com/bryon82/SailwindClimate/tree/main/Screenshots/AestrinClearDay.png)
 
 ## For Other Mod Authors
 
