@@ -2,6 +2,7 @@
 using System.Globalization;
 using UnityEngine;
 using static Climate.Climate_Plugin;
+using static Climate.Configs;
 
 namespace Climate
 {
@@ -27,8 +28,7 @@ namespace Climate
         const float LARGE_SCALE_ANOMALY_SCALE = 5f; // roughly matches the systems' typical |amplitude|
 
         const float WIND_STEERING_STRENGTH = 0.8f; // 0 = pure independent drift, 1 = fully wind-steered
-        const float WIND_SPEED_REF_MAX = 60f;
-
+        public static int maxPressureCells = 6;
 
 
         internal static readonly List<PressureCell> cells = new List<PressureCell>();
@@ -37,7 +37,7 @@ namespace Climate
         {
             cells.RemoveAll(cell => GameState.day - cell.spawnDay > cell.lifespanDays);
 
-            while (cells.Count < 6)
+            while (cells.Count < maxPressureCells)
             {
                 //// shared "cyclonicity" factor: +1 = strongly cyclonic (low, moist), -1 = strongly anticyclonic (high, dry)
                 //var cyclonicity = Random.Range(-1f, 1f);
@@ -86,7 +86,7 @@ namespace Climate
                     ? Vector2.Lerp(randomDirLatLon, windDirLatLon.normalized, WIND_STEERING_STRENGTH).normalized
                     : randomDirLatLon;
 
-                var windSpeedNormalized = Mathf.InverseLerp(0f, WIND_SPEED_REF_MAX, windSample.speed);
+                var windSpeedNormalized = Mathf.InverseLerp(0f, maxWindSpeed.Value, windSample.speed);
                 var driftSpeed = Mathf.Lerp(-2, 2, windSpeedNormalized);
 
                 var newCell = new PressureCell
@@ -121,8 +121,8 @@ namespace Climate
             cells.Clear();
             cells.AddRange(loadedCells);
 
-            if (cells.Count < 6)            
-                UpdatePressureCells();            
+            if (cells.Count < maxPressureCells)
+                UpdatePressureCells();
         }
     }
 }

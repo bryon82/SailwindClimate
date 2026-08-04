@@ -37,6 +37,26 @@ namespace Climate
         public static float GetMinWindSpeed() => WindService.GetMinWindSpeed();
         public static void WriteWindSpeedsToFile() => WindService.WriteSpeedsToFile();
 
+        // Expose the min/max latitude and longitude values from WindService
+        public static int MaxLatitude => WindService.maxLatitude;
+        public static int MinLatitude => WindService.minLatitude;
+        public static int MaxLongitude => WindService.maxLongitude;
+        public static int MinLongitude => WindService.minLongitude;
+
+        // Expose the maxPressureCells value from PressureCell
+        public static int MaxPressureCells => PressureCell.maxPressureCells;
+
+        // Expose AddPressureSystem method from PressureSystem
+        public static void AddPressureSystem(
+            float s_x0, float s_y0, float s_amp, float s_sigmaX, float s_sigmaY, float s_thetaDeg,
+            float w_x0, float w_y0, float w_amp, float w_sigmaX, float w_sigmaY, float w_thetaDeg,
+            float posWiggle, float ampWiggle) => 
+                PressureSystem.AddPressureSystem(
+                    s_x0, s_y0, s_amp, s_sigmaX, s_sigmaY, s_thetaDeg,
+                    w_x0, w_y0, w_amp, w_sigmaX, w_sigmaY, w_thetaDeg,
+                    posWiggle, ampWiggle);
+
+
         private void Awake()
         {
             if (Instance != null && Instance != this)

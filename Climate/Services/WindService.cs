@@ -10,10 +10,10 @@ namespace Climate
     {
         const float INFLOW_ANGLE_DEG = 15f;
 
-        const int MIN_LATITUDE = 25;
-        const int MAX_LATITUDE = 50;
-        const int MIN_LONGITUDE = -15;
-        const int MAX_LONGITUDE = 35;
+        public static int minLatitude = 25;
+        public static int maxLatitude = 50;
+        public static int minLongitude = -15;
+        public static int maxLongitude = 35;
 
         internal readonly struct WindSample
         {
@@ -27,7 +27,7 @@ namespace Climate
             }
         }
 
-        internal static readonly WindSample[,] windGrid = new WindSample[MAX_LATITUDE - MIN_LATITUDE + 1, MAX_LONGITUDE - MIN_LONGITUDE + 1];
+        internal static readonly WindSample[,] windGrid = new WindSample[maxLatitude - minLatitude + 1, maxLongitude - minLongitude + 1];
 
         internal static void UpdateDailyWindField()
         {
@@ -36,9 +36,9 @@ namespace Climate
             var cosA = Mathf.Cos(inflow);
             var sinA = Mathf.Sin(inflow);
 
-            for (var lat = MIN_LATITUDE; lat <= MAX_LATITUDE; lat++)
+            for (var lat = minLatitude; lat <= maxLatitude; lat++)
             {
-                for (var lon = MIN_LONGITUDE; lon <= MAX_LONGITUDE; lon++)
+                for (var lon = minLongitude; lon <= maxLongitude; lon++)
                 {
                     float dPdx = 0f, dPdy = 0f;
                     foreach (var system in PressureSystem.systems)
@@ -57,7 +57,7 @@ namespace Climate
                     var speed = Mathf.Sqrt(uRot * uRot + vRot * vRot);
                     var direction = speed > 0.0001f ? new Vector3(uRot, 0f, vRot) / speed : Vector3.zero;
 
-                    windGrid[lat - MIN_LATITUDE, lon - MIN_LONGITUDE] = new WindSample(direction, speed);
+                    windGrid[lat - minLatitude, lon - minLongitude] = new WindSample(direction, speed);
                 }
             }
         }
@@ -71,8 +71,8 @@ namespace Climate
 
             WindSample Get(int la, int lo)
             {
-                if (la >= MIN_LATITUDE && la <= MAX_LATITUDE && lo >= MIN_LONGITUDE && lo <= MAX_LONGITUDE)
-                    return windGrid[la - MIN_LATITUDE, lo - MIN_LONGITUDE];
+                if (la >= minLatitude && la <= maxLatitude && lo >= minLongitude && lo <= maxLongitude)
+                    return windGrid[la - minLatitude, lo - minLongitude];
                 return new WindSample(Vector3.zero, 0f);
             }
 

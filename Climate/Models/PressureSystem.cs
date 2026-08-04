@@ -32,7 +32,7 @@ namespace Climate
         }
     }
 
-    internal class PressureSystem : IModDataSaveable
+    public class PressureSystem : IModDataSaveable
     {
         private readonly PressureSystemParams winter;
         private readonly PressureSystemParams summer;
@@ -173,6 +173,17 @@ namespace Climate
             foreach (var system in systems)
                 total += system.Value(lon, lat, day);
             return total;
+        }
+
+        public static void AddPressureSystem(
+            float s_x0, float s_y0, float s_amp, float s_sigmaX, float s_sigmaY, float s_thetaDeg,
+            float w_x0, float w_y0, float w_amp, float w_sigmaX, float w_sigmaY, float w_thetaDeg,
+            float posWiggle, float ampWiggle)
+        {
+            var summerParams = new PressureSystemParams(s_x0, s_y0, s_amp, s_sigmaX, s_sigmaY, s_thetaDeg);
+            var winterParams = new PressureSystemParams(w_x0, w_y0, w_amp, w_sigmaX, w_sigmaY, w_thetaDeg);
+            var system = new PressureSystem(summerParams, winterParams, posWiggle, ampWiggle);
+            systems.Add(system);
         }
 
         string IModDataSaveable.SaveString()
