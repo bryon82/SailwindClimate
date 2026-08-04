@@ -31,20 +31,24 @@ namespace Climate
         public static float CloudRate { get; internal set; }
         public static float TargetCloudRate { get; internal set; }
         public static bool ApplyingFogDensity { get; internal set; }
-        public static bool ApplyingRainIntensity { get; internal set; }       
+        public static bool ApplyingRainIntensity { get; internal set; }
         public static bool ApplyingCloudRate { get; internal set; }
         public static float GetMaxWindSpeed() => WindService.GetMaxWindSpeed();
         public static float GetMinWindSpeed() => WindService.GetMinWindSpeed();
         public static void WriteWindSpeedsToFile() => WindService.WriteSpeedsToFile();
 
-        // Expose the min/max latitude and longitude values from WindService
-        public static int MaxLatitude => WindService.maxLatitude;
-        public static int MinLatitude => WindService.minLatitude;
-        public static int MaxLongitude => WindService.maxLongitude;
-        public static int MinLongitude => WindService.minLongitude;
+        // Expose min/max latitude and longitude from WindService
+        public static int MaxLatitude  { get => WindService.maxLatitude; set => WindService.maxLatitude = value; }
+        public static int MinLatitude { get => WindService.minLatitude; set => WindService.minLatitude = value; }
+        public static int MaxLongitude { get => WindService.maxLongitude; set => WindService.maxLongitude = value; }
+        public static int MinLongitude { get => WindService.minLongitude; set => WindService.minLongitude = value; }
 
-        // Expose the maxPressureCells value from PressureCell
-        public static int MaxPressureCells => PressureCell.maxPressureCells;
+        // Expose maxPressureCells from PressureCell
+        public static int MaxPressureCells
+        { 
+            get => PressureCell.maxPressureCells;
+            set => PressureCell.maxPressureCells = value;
+        }
 
         // Expose AddPressureSystem method from PressureSystem
         public static void AddPressureSystem(
@@ -78,6 +82,6 @@ namespace Climate
             Sun.OnNewDay += PressureSystem.UpdateAllWiggles;
             Sun.OnNewDay += WindService.UpdateDailyWindField;
             Sun.OnNewDay += DateTextUI.UpdateDateText;
-        }        
+        }
     }
 }
