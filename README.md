@@ -15,7 +15,14 @@ This replaces the base games trade winds and can be disabled in the configs. The
 
 https://github.com/user-attachments/assets/8007eb00-4a3d-4cd5-9908-d80581b801d4
 
-Stills of the season start dates can be found in the Screenshots directory.
+Winter Trade Winds  
+<img src="https://github.com/bryon82/SailwindClimate/blob/main/Screenshots/winterWinds.png" alt="Winter Trade Winds" width="600" height="400">  
+Spring Trade Winds  
+<img src="https://github.com/bryon82/SailwindClimate/blob/main/Screenshots/springWinds.png" alt="Spring Trade Winds" width="600" height="400">  
+Summer Trade Winds  
+<img src="https://github.com/bryon82/SailwindClimate/blob/main/Screenshots/summerWinds.png" alt="Summer Trade Winds" width="600" height="400">  
+Autumn Trade Winds  
+<img src="https://github.com/bryon82/SailwindClimate/blob/main/Screenshots/autumnWinds.png" alt="Autumn Trade Winds" width="600" height="400">  
 
 ## Pressure Systems
 
@@ -40,7 +47,7 @@ The thermometer and hygrometer values are based on the regional climates added t
 
 The values read from the barometer are based on pressure cells and how close you are to the nearest storm. The lowest a pressure cell can lower the pressure to is 28.2inHg, anything lower than that means you are definitely in a storm. A value of 26inHg means you are at the center of the storm.  
 
-![instruments image](https://github.com/bryon82/SailwindClimate/blob/main/Screenshots/AestrinClearDay.png)
+<img src="https://github.com/bryon82/SailwindClimate/blob/main/Screenshots/AestrinClearDay.png" alt="Image of instruments" width="400" height="400">
 
 ## For Other Mod Authors
 
