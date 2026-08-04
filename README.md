@@ -15,6 +15,7 @@ This replaces the base games trade winds and can be disabled in the configs. The
 
 https://github.com/user-attachments/assets/8007eb00-4a3d-4cd5-9908-d80581b801d4
 
+Stills of the season start dates can be found in the Screenshots directory.
 
 ## Pressure Systems
 
