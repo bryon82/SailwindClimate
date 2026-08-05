@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.3.0] - 2026-08-05
+
+### Added
+- Exposed properties MaxWindLatitude, MinWindLatitude, MaxWindLongitude, MinWindLongitude, MaxPressureCells, MaxCellSpawnLatitude, MinCellSpawnLatitude, MaxCellSpawnLongitude, and MinCellSpawnLongitude so mod authors can easily adjust the size of the generated wind grid and change the number of generated pressure cells that are active on the map as well as where they can spawn.
+- Added and exposed the function AddPressureSystem so mod authors can add more pressure systems.
+
 ## [v1.2.0] - 2026-08-03
 
 ### Added

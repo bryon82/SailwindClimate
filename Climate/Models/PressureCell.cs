@@ -16,6 +16,11 @@ namespace Climate
         internal int spawnDay;
         internal int lifespanDays;
 
+        public static int maxSpawnLatitude = 42;
+        public static int minSpawnLatitude = 28;
+        public static int maxSpawnLongitude = 6;
+        public static int minSpawnLongitude = -6;
+
         const float PRESSURE_MOISTURE_CORRELATION = 0.6f; // 0 = independent, 1 = fully linked
         const float INTENSITY_SCALE = 1.5f;
         const float MOIST_MAX = 10f;  // strongly cyclonic -> strongly moist advection

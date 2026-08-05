@@ -12,7 +12,7 @@ namespace Climate
     {
         public const string PLUGIN_GUID = "com.raddude.climate";
         public const string PLUGIN_NAME = "Climate";
-        public const string PLUGIN_VERSION = "1.2.0";
+        public const string PLUGIN_VERSION = "1.3.0";
 
         internal static Climate_Plugin Instance { get; private set; }
         private static ManualLogSource _logger;
@@ -38,17 +38,21 @@ namespace Climate
         public static void WriteWindSpeedsToFile() => WindService.WriteSpeedsToFile();
 
         // Expose min/max latitude and longitude from WindService
-        public static int MaxLatitude  { get => WindService.maxLatitude; set => WindService.maxLatitude = value; }
-        public static int MinLatitude { get => WindService.minLatitude; set => WindService.minLatitude = value; }
-        public static int MaxLongitude { get => WindService.maxLongitude; set => WindService.maxLongitude = value; }
-        public static int MinLongitude { get => WindService.minLongitude; set => WindService.minLongitude = value; }
+        public static int MaxWindLatitude  { get => WindService.maxLatitude; set => WindService.maxLatitude = value; }
+        public static int MinWindLatitude { get => WindService.minLatitude; set => WindService.minLatitude = value; }
+        public static int MaxWindLongitude { get => WindService.maxLongitude; set => WindService.maxLongitude = value; }
+        public static int MinWindLongitude { get => WindService.minLongitude; set => WindService.minLongitude = value; }
 
-        // Expose maxPressureCells from PressureCell
+        // Exposed from PressureCell
         public static int MaxPressureCells
         { 
             get => PressureCell.maxPressureCells;
             set => PressureCell.maxPressureCells = value;
         }
+        public static int MaxCellSpawnLatitude { get => PressureCell.maxSpawnLatitude; set => PressureCell.maxSpawnLatitude = value; }
+        public static int MinCellSpawnLatitude { get => PressureCell.minSpawnLatitude; set => PressureCell.minSpawnLatitude = value; }
+        public static int MaxCellSpawnLongitude { get => PressureCell.maxSpawnLongitude; set => PressureCell.maxSpawnLongitude = value; }
+        public static int MinCellSpawnLongitude { get => PressureCell.minSpawnLongitude; set => PressureCell.minSpawnLongitude = value; }
 
         // Expose AddPressureSystem method from PressureSystem
         public static void AddPressureSystem(
