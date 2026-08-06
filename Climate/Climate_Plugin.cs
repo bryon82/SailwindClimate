@@ -3,6 +3,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Climate
@@ -22,7 +23,7 @@ namespace Climate
         internal static void LogWarning(string message) => _logger.LogWarning(message);
         internal static void LogError(string message) => _logger.LogError(message);
 
-        internal static WindService.WindSample[,] WindGrid => WindService.windGrid;
+        internal static Vector3[,] WindGrid => WindService.windGrid;
         internal static List<PressureCell> PressureCells => PressureCell.cells;
         public static float FogDensity { get; internal set; }
         public static float TargetFogDensity { get; internal set; }
@@ -35,7 +36,10 @@ namespace Climate
         public static bool ApplyingCloudRate { get; internal set; }
         public static float GetMaxWindSpeed() => WindService.GetMaxWindSpeed();
         public static float GetMinWindSpeed() => WindService.GetMinWindSpeed();
-        public static void WriteWindSpeedsToFile() => WindService.WriteSpeedsToFile();
+        public static void WriteWindGridToFile() => WindService.WriteWindGridToFile();
+        public static void WriteWindGridNormalizedToFile() => WindService.WriteWindGridToFile(normalized: true);
+        public static void WriteWindGridMagnitudeToFile() => WindService.WriteWindGridToFile(magnitude: true);
+        public static void CheckWindVector() => WindService.CheckWindVector();
 
         // Expose min/max latitude and longitude from WindService
         public static int MaxWindLatitude  { get => WindService.maxLatitude; set => WindService.maxLatitude = value; }

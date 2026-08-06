@@ -84,14 +84,14 @@ namespace Climate
 
                 // Steer velocity toward the large-scale wind at this cell's spawn point.
                 var windSample = WindService.SampleWind(lon, lat);
-                var windDirLatLon = new Vector2(windSample.direction.z, windSample.direction.x); // (lat,lon) - matches PressureCell convention
+                var windDirLatLon = new Vector2(windSample.normalized.z, windSample.normalized.x); // (lat,lon) - matches PressureCell convention
                 var randomDirLatLon = new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)).normalized;
 
                 var steeredDir = windDirLatLon.sqrMagnitude > 0.0001f
                     ? Vector2.Lerp(randomDirLatLon, windDirLatLon.normalized, WIND_STEERING_STRENGTH).normalized
                     : randomDirLatLon;
 
-                var windSpeedNormalized = Mathf.InverseLerp(0f, maxWindSpeed.Value, windSample.speed);
+                var windSpeedNormalized = Mathf.InverseLerp(0f, maxWindSpeed.Value, windSample.magnitude);
                 var driftSpeed = Mathf.Lerp(-2, 2, windSpeedNormalized);
 
                 var newCell = new PressureCell

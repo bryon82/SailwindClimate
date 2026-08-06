@@ -122,8 +122,8 @@ namespace Climate
         internal static class ReplaceWindPatches
         {
             const float SMALL_SCALE_GRADIENT_SCALE = 40f;
-            const float SMALL_SCALE_MAX_CONTRIBUTION = 0.5f;
-            const float GRADIENT_SAMPLE_DIST = 2f;
+            const float SMALL_SCALE_MAX_CONTRIBUTION = 0.3f;
+            const float GRADIENT_SAMPLE_DIST = 1f;
 
             [HarmonyPostfix]
             [HarmonyPatch("Awake")]
@@ -143,8 +143,7 @@ namespace Climate
 
                 var coords = FloatingOriginManager.instance.GetGlobeCoords(Refs.observerMirror.transform);
 
-                var largeScaleSample = WindService.SampleWind(coords.x, coords.z);
-                var largeScale = largeScaleSample.direction * largeScaleSample.speed;
+                var largeScale = WindService.SampleWind(coords.x, coords.z);
 
                 float P(Vector3 offset) => PressureService.GetPressure(coords + offset, GameState.day, false);
 
@@ -167,8 +166,24 @@ namespace Climate
                 var coords = FloatingOriginManager.instance.GetGlobeCoords(Refs.observerMirror.transform);
                 var largeScaleSample = WindService.SampleWind(coords.x, coords.z);
 
-                // adding back in base game's storm and land influence calcs
-                ///////////////////////////////////////////////////////////
+                var windInstance = Wind.instance;
+
+                // --- Wind Chaos ---
+                var directionChaos = Weather.instance.currentRegion.windDirChaos;
+                var magnitudeChaos = Weather.instance.currentRegion.windChaos;
+                var vector = Vector3.Lerp(new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized, largeScaleSample.normalized, windInstance.tradeWindInfluence);
+                var vectorAdj = Vector3.Lerp(Wind.currentBaseWind.normalized, vector.normalized, directionChaos).normalized;
+
+                var num = Random.Range(largeScaleSample.magnitude - magnitudeChaos, largeScaleSample.magnitude + magnitudeChaos);
+                if (num < windInstance.minimumMagnitude)
+                    num = windInstance.minimumMagnitude;
+                else if (num > maxWindSpeed.Value)
+                    num = maxWindSpeed.Value;
+
+                Wind.currentBaseWind = vectorAdj * num;
+                windInstance.outCurrentBaseWind = Wind.currentBaseWind;
+
+                // --- Adjust Wind Magnitude For Storm/Land Distance ---                
                 var adjSum = 0f;
 
                 var stormDist = Mathf.InverseLerp(13000f, 500f, WeatherStorms.currentStormDistance);
@@ -178,17 +193,16 @@ namespace Climate
                     LogDebug($"Wind: storm magnitude is {stormInfluence} lerp is {stormDist}");
 
                 var landDist = Mathf.InverseLerp(1500f, 4000f, GameState.distanceToLand);
-                var landInfluence = largeScaleSample.speed * landDist * 0.66f;
+                var landInfluence = largeScaleSample.magnitude * landDist * 0.66f;
                 adjSum += landInfluence;
                 if (landDist > 0f)
                     LogDebug($"Wind: ocean magnitude is {landInfluence} lerp is {landDist}");
 
                 if (adjSum > 20f)
                     adjSum = 20f;
-                ////////////////////////////////////////////////////////////
 
-                var adjustedMagnitude = largeScaleSample.speed + adjSum;
-                ___currentWindTarget = ___currentWindTarget.normalized * adjustedMagnitude;
+                var windTarget = Wind.currentBaseWind.normalized * (Wind.currentBaseWind.magnitude + adjSum);
+                ___currentWindTarget = windTarget;
 
                 return false;
             }

@@ -15,19 +15,7 @@ namespace Climate
         public static int minLongitude = -15;
         public static int maxLongitude = 35;
 
-        internal readonly struct WindSample
-        {
-            internal readonly Vector3 direction;
-            internal readonly float speed;
-
-            internal WindSample(Vector3 direction, float speed)
-            {
-                this.direction = direction;
-                this.speed = speed;
-            }
-        }
-
-        internal static readonly WindSample[,] windGrid = new WindSample[maxLatitude - minLatitude + 1, maxLongitude - minLongitude + 1];
+        internal static readonly Vector3[,] windGrid = new Vector3[maxLatitude - minLatitude + 1, maxLongitude - minLongitude + 1];
 
         internal static void UpdateDailyWindField()
         {
@@ -54,44 +42,16 @@ namespace Climate
                     var uRot = u * cosA - v * sinA;
                     var vRot = u * sinA + v * cosA;
 
-                    var speed = Mathf.Sqrt(uRot * uRot + vRot * vRot);
-                    var direction = speed > 0.0001f ? new Vector3(uRot, 0f, vRot) / speed : Vector3.zero;
-
-                    windGrid[lat - minLatitude, lon - minLongitude] = new WindSample(direction, speed);
+                    windGrid[lat - minLatitude, lon - minLongitude] = new Vector3(uRot, 0f, vRot);
                 }
             }
         }
 
-        internal static WindSample SampleWind(float lon, float lat)
+        internal static Vector3 SampleWind(float lon, float lat)
         {
-            var lat0 = Mathf.FloorToInt(lat);
-            var lon0 = Mathf.FloorToInt(lon);
-            var tLat = lat - lat0;
-            var tLon = lon - lon0;
-
-            WindSample Get(int la, int lo)
-            {
-                if (la >= minLatitude && la <= maxLatitude && lo >= minLongitude && lo <= maxLongitude)
-                    return windGrid[la - minLatitude, lo - minLongitude];
-                return new WindSample(Vector3.zero, 0f);
-            }
-
-            var s00 = Get(lat0, lon0);
-            var s01 = Get(lat0, lon0 + 1);
-            var s10 = Get(lat0 + 1, lon0);
-            var s11 = Get(lat0 + 1, lon0 + 1);
-
-            // Interpolate direction and speed independently, then recombine -
-            // avoids artificially damping speed at points where surrounding cells' directions diverge.
-            var dirLat0 = Vector3.Lerp(s00.direction, s01.direction, tLon);
-            var dirLat1 = Vector3.Lerp(s10.direction, s11.direction, tLon);
-            var direction = Vector3.Lerp(dirLat0, dirLat1, tLat);
-
-            var speedLat0 = Mathf.Lerp(s00.speed, s01.speed, tLon);
-            var speedLat1 = Mathf.Lerp(s10.speed, s11.speed, tLon);
-            var speed = Mathf.Lerp(speedLat0, speedLat1, tLat);
-
-            return new WindSample(direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector3.zero, speed);
+            if (lat > maxLatitude || lat < minLatitude || lon < minLongitude || lon > maxLongitude)
+                return Vector3.zero;
+            return windGrid[Mathf.RoundToInt(lat) - minLatitude, Mathf.RoundToInt(lon) - minLongitude];
         }
 
         ////// used for debugging
@@ -100,8 +60,8 @@ namespace Climate
             float max = 0f;
             foreach (var sample in windGrid)
             {
-                if (sample.speed > max)
-                    max = sample.speed;
+                if (sample.magnitude > max)
+                    max = sample.magnitude;
             }
             return max;
         }
@@ -111,15 +71,23 @@ namespace Climate
             float min = 100f;
             foreach (var sample in windGrid)
             {
-                if (sample.speed < min)
-                    min = sample.speed;
+                if (sample.magnitude < min)
+                    min = sample.magnitude;
             }
             return min;
         }
 
-        public static void WriteSpeedsToFile()
+        public static void CheckWindVector()
         {
-            var filePath = Path.Combine(Application.persistentDataPath, "windGrid_speeds.csv");
+            var coords = FloatingOriginManager.instance.GetGlobeCoords(Refs.observerMirror.transform);
+            var windSample = SampleWind(coords.x, coords.z);
+
+            LogDebug($"Wind check at lat: {coords.z}, lon: {coords.x} - direction: {windSample.normalized} magnitude: {windSample.magnitude}");
+        }        
+
+        public static void WriteWindGridToFile(bool magnitude = false, bool normalized = false)
+        {
+            var filePath = Path.Combine(Application.persistentDataPath, "windGrid_directions.csv");
             var rows = windGrid.GetLength(0);
             var cols = windGrid.GetLength(1);
 
@@ -129,7 +97,14 @@ namespace Climate
             {
                 for (int x = 0; x < cols; x++)
                 {
-                    sb.Append(windGrid[y, x].speed);
+                    var dir = windGrid[y, x];
+                    if (normalized)
+                        dir = dir.normalized;
+
+                    if (!magnitude)
+                        sb.Append($"{dir.x} {dir.y} {dir.z}");
+                    else
+                        sb.Append($"{dir.magnitude}");
                     if (x < cols - 1)
                         sb.Append(',');
                 }
