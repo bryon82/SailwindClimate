@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.3.1] - 2026-08-06
+
+### Updated
+- Added back in wind chaos.
+- Changed the way the wind direction updates to more resemble vanilla game.
+
 ## [v1.3.0] - 2026-08-05
 
 ### Added
