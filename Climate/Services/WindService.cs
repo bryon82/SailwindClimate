@@ -22,7 +22,10 @@ namespace Climate
             var numLatitudes = maxLatitude - minLatitude + 1;
             var numLongitudes = maxLongitude - minLongitude + 1;
             if (windGrid.GetLength(0) != numLatitudes || windGrid.GetLength(1) != numLongitudes)
+            {
+                LogDebug($"Resizing windGrid to {numLatitudes}x{numLongitudes}");
                 windGrid = new Vector3[numLatitudes, numLongitudes];
+            }                
 
             var K = maxWindSpeed.Value;
             var inflow = INFLOW_ANGLE_DEG * Mathf.Deg2Rad;
