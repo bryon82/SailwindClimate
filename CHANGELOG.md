@@ -5,8 +5,14 @@ All notable changes to this project will be documented in this file.
 ## [v1.3.1] - 2026-08-06
 
 ### Updated
-- Added back in wind chaos.
+- Wind to bring back in wind chaos.
 - Changed the way the wind direction updates to more resemble vanilla game.
+
+### Added
+- Configurable for how stable the wind is.
+
+### Fixed
+- Bugs related to exposed variables with expanding the windGrid size and the spawn location of generated pressure cells. (thanks NANDbrew for reporting the problem!)
 
 ## [v1.3.0] - 2026-08-05
 
