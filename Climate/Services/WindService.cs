@@ -15,10 +15,15 @@ namespace Climate
         public static int minLongitude = -15;
         public static int maxLongitude = 35;
 
-        internal static readonly Vector3[,] windGrid = new Vector3[maxLatitude - minLatitude + 1, maxLongitude - minLongitude + 1];
+        internal static Vector3[,] windGrid = new Vector3[maxLatitude - minLatitude + 1, maxLongitude - minLongitude + 1];
 
         internal static void UpdateDailyWindField()
         {
+            var numLatitudes = maxLatitude - minLatitude + 1;
+            var numLongitudes = maxLongitude - minLongitude + 1;
+            if (windGrid.GetLength(0) != numLatitudes || windGrid.GetLength(1) != numLongitudes)
+                windGrid = new Vector3[numLatitudes, numLongitudes];
+
             var K = maxWindSpeed.Value;
             var inflow = INFLOW_ANGLE_DEG * Mathf.Deg2Rad;
             var cosA = Mathf.Cos(inflow);

@@ -69,8 +69,8 @@ namespace Climate
 
                 //cells.Add(newCell);
 
-                var lat = Random.Range(28f, 42f);
-                var lon = Random.Range(-6f, 6f);
+                var lat = Random.Range(minSpawnLatitude, maxSpawnLatitude);
+                var lon = Random.Range(minSpawnLongitude, maxSpawnLongitude);
 
                 var pressureSystemInfluence = PressureSystem.GetPressureSystemInfluence(lon, lat, GameState.day);
                 var preferredCyclonicity = Mathf.Clamp(-pressureSystemInfluence / LARGE_SCALE_ANOMALY_SCALE, -1f, 1f);
