@@ -49,6 +49,13 @@ The values read from the barometer are based on pressure cells and how close you
 
 <img src="https://github.com/bryon82/SailwindClimate/blob/main/Screenshots/AestrinClearDay.png" alt="Image of instruments" width="400" height="400">
 
+## Configurable
+
+* The length of the year. This affects when seasons happen.
+* Enable/disable custom trade winds.
+* The maximum wind speed for trade winds.
+* The stability of the wind.
+
 ## For Other Mod Authors
 
 The [WeatherService](https://github.com/bryon82/SailwindClimate/blob/main/Climate/Services/WeatherService.cs) class offers many different functions to retrieve climate related values if you would like to use any weather related data from this mod.  

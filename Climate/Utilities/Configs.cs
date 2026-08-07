@@ -7,6 +7,7 @@ namespace Climate
         internal static ConfigEntry<int> yearLength;
         internal static ConfigEntry<bool> enableWinds;
         internal static ConfigEntry<int> maxWindSpeed;
+        internal static ConfigEntry<float> windStability;
 
         internal static void InitializeConfigs()
         {
@@ -33,6 +34,15 @@ namespace Climate
                 "Maximum Trade Wind Speed",
                 20,
                 new ConfigDescription(windSpeedDesc, new AcceptableValueRange<int>(1, 40)));
+
+            var stabilityDesc =
+                "A value of 0 means the winds are completely chaotic, while a value of 1 means the winds will " +
+                "nearly always align with the trade winds. Base game has this set to 0.25.";
+            windStability = config.Bind(
+                "Wind Settings",
+                "Wind Stability",
+                0.45f,
+                new ConfigDescription(stabilityDesc, new AcceptableValueRange<float>(0f, 1f)));
         }
     }
 }
