@@ -60,6 +60,8 @@ The values read from the barometer are based on pressure cells and how close you
 
 The [WeatherService](https://github.com/bryon82/SailwindClimate/blob/main/Climate/Services/WeatherService.cs) class offers many different functions to retrieve climate related values if you would like to use any weather related data from this mod.  
 
+There are exposed variables and methods to change the size of the trade winds grid, add more generated pressure cells, and to add custom pressure systems. See [Climate_Plugin](https://github.com/bryon82/SailwindClimate/blob/main/Climate/Climate_Plugin.cs) for the exposed variables.  
+
 I use prefab directory indexes 820 - 822.  
 
 ### Installation
