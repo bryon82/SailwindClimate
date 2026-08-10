@@ -44,9 +44,9 @@ namespace Climate
                 AddShopStall(scenery, "market_stall (10)", "shop (11)", shopPos, shopRot, "shopkeeper (11)", shopkeeperPos, shopkeeperRot);
             }
 
-            MakeShopItem("shop item 320", scenery.transform, new Vector3(1543.7f, 7.036f, -362.12f), new Vector3(78.5f, 325f, 0f), Items.Barometer);
-            MakeShopItem("shop item 321", scenery.transform, new Vector3(1543.8f, 6.806f, -363.2f), new Vector3(78.5f, 325f, 0f), Items.Thermometer);
-            MakeShopItem("shop item 322", scenery.transform, new Vector3(1544.7f, 6.806f, -362.6f), new Vector3(78.5f, 325f, 0f), Items.Hygrometer);
+            MakeShopItem("shop item 320", scenery.transform, new Vector3(1546.15f, 7.026f, -360.72f), new Vector3(78.5f, 325f, 0f), Items.Barometer);
+            MakeShopItem("shop item 321", scenery.transform, new Vector3(1546.2f, 6.836f, -361.8f), new Vector3(78.5f, 325f, 0f), Items.Thermometer);
+            MakeShopItem("shop item 322", scenery.transform, new Vector3(1547.1f, 6.836f, -361.2f), new Vector3(78.5f, 325f, 0f), Items.Hygrometer);
         }
 
         internal static void FortAestrin()

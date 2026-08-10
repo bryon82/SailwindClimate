@@ -41,7 +41,7 @@ Low pressure will cause a cooling effect and high pressure will cause a radiativ
 
 ## Instruments
 
-All instruments can be bought in Gold Rock City, Dragon Cliffs, and Ft. Aestrin near where navigation equipment is sold.  
+All instruments can be bought in Gold Rock City, Dragon Cliffs, and Ft. Aestrin at it's own market stall that may share items with BetterFishing if installed.  
 
 The thermometer and hygrometer values are based on the regional climates added to the game.  
 
