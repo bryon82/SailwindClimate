@@ -1,9 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Climate
@@ -23,7 +21,7 @@ namespace Climate
         internal static void LogDebug(string message) => _logger.LogDebug(message);
         internal static void LogInfo(string message) => _logger.LogInfo(message);
         internal static void LogWarning(string message) => _logger.LogWarning(message);
-        internal static void LogError(string message) => _logger.LogError(message);        
+        internal static void LogError(string message) => _logger.LogError(message);
 
         // Expose min/max latitude and longitude from WindService
         public static int MaxWindLatitude  { get => WindService.maxLatitude; set => WindService.maxLatitude = value; }
@@ -33,7 +31,7 @@ namespace Climate
 
         // Exposed from PressureCell
         public static int MaxPressureCells
-        { 
+        {
             get => PressureCell.maxPressureCells;
             set => PressureCell.maxPressureCells = value;
         }
