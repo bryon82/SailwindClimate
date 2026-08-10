@@ -44,9 +44,9 @@ namespace Climate
                 var rainSuppression = Mathf.Clamp01(GameState.rainIntensity / RAIN_SUPPRESSION_THRESHOLD);
                 var effectiveFog = smoothedFog * (1f - rainSuppression);
 
-                FogDensity = effectiveFog;
-                TargetFogDensity = target;
-                ApplyingFogDensity = effectiveFog > baseGameFog;
+                DebugProps.FogDensity = effectiveFog;
+                DebugProps.TargetFogDensity = target;
+                DebugProps.ApplyingFogDensity = effectiveFog > baseGameFog;
 
                 RenderSettings.fogDensity = Mathf.Max(baseGameFog, effectiveFog);
             }
@@ -109,12 +109,12 @@ namespace Climate
                     upperEm.rateOverTime = combinedCloud * 2f;
                 }
 
-                RainIntensity = smoothedRain;
-                CloudRate = smoothedCloud;
-                TargetRainIntensity = rainTarget;
-                TargetCloudRate = cloudTarget;
-                ApplyingRainIntensity = smoothedRain > baseGameRainIntensity;
-                ApplyingCloudRate = smoothedCloud > baseGameCloudRate;
+                DebugProps.RainIntensity = smoothedRain;
+                DebugProps.CloudRate = smoothedCloud;
+                DebugProps.TargetRainIntensity = rainTarget;
+                DebugProps.TargetCloudRate = cloudTarget;
+                DebugProps.ApplyingRainIntensity = smoothedRain > baseGameRainIntensity;
+                DebugProps.ApplyingCloudRate = smoothedCloud > baseGameCloudRate;
             }
         }
 

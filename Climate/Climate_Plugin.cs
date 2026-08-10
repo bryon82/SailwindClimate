@@ -13,33 +13,17 @@ namespace Climate
     {
         public const string PLUGIN_GUID = "com.raddude.climate";
         public const string PLUGIN_NAME = "Climate";
-        public const string PLUGIN_VERSION = "1.3.1";
+        public const string PLUGIN_VERSION = "1.4.0";
 
         internal static Climate_Plugin Instance { get; private set; }
         private static ManualLogSource _logger;
 
+        internal static DebugProps DebugProps { get; private set; } = new DebugProps();
+
         internal static void LogDebug(string message) => _logger.LogDebug(message);
         internal static void LogInfo(string message) => _logger.LogInfo(message);
         internal static void LogWarning(string message) => _logger.LogWarning(message);
-        internal static void LogError(string message) => _logger.LogError(message);
-
-        internal static Vector3[,] WindGrid => WindService.windGrid;
-        internal static List<PressureCell> PressureCells => PressureCell.cells;
-        public static float FogDensity { get; internal set; }
-        public static float TargetFogDensity { get; internal set; }
-        public static float RainIntensity { get; internal set; }
-        public static float TargetRainIntensity { get; internal set; }
-        public static float CloudRate { get; internal set; }
-        public static float TargetCloudRate { get; internal set; }
-        public static bool ApplyingFogDensity { get; internal set; }
-        public static bool ApplyingRainIntensity { get; internal set; }
-        public static bool ApplyingCloudRate { get; internal set; }
-        public static float GetMaxWindSpeed() => WindService.GetMaxWindSpeed();
-        public static float GetMinWindSpeed() => WindService.GetMinWindSpeed();
-        public static void WriteWindGridToFile() => WindService.WriteWindGridToFile();
-        public static void WriteWindGridNormalizedToFile() => WindService.WriteWindGridToFile(normalized: true);
-        public static void WriteWindGridMagnitudeToFile() => WindService.WriteWindGridToFile(magnitude: true);
-        public static void CheckWindVector() => WindService.CheckWindVector();
+        internal static void LogError(string message) => _logger.LogError(message);        
 
         // Expose min/max latitude and longitude from WindService
         public static int MaxWindLatitude  { get => WindService.maxLatitude; set => WindService.maxLatitude = value; }

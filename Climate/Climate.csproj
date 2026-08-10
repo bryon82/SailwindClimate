@@ -90,6 +90,8 @@
     <Compile Include="Utilities\AssetLoader.cs" />
     <Compile Include="ClimateZones.cs" />
     <Compile Include="Utilities\Configs.cs" />
+    <Compile Include="Utilities\DebugProps.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\IModDataSaveable.cs" />
     <Compile Include="Utilities\Items.cs" />
     <Compile Include="Utilities\ModData.cs" />

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.4.0] - 2026-08-10
+
+### Added
+- Market stalls in GRC, Ft. Aestrin, and Dragon Cliffs and moved the barometer, thermometer, and hygrometer to them.
+
+### Fixed
+- Index out of range exception that can sometimes happen when changing the grid size and spawn range with exposed properties.
+
 ## [v1.3.1] - 2026-08-06
 
 ### Updated

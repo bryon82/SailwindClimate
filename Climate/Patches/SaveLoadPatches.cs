@@ -19,8 +19,8 @@ namespace Climate.Patches
             [HarmonyPatch("LoadModData")]
             public static void LoadModData()
             {
-                PressureCell.LoadPressureCells();
                 PressureSystem.LoadPressureSystems();
+                PressureCell.LoadPressureCells();                
                 DateTextUI.UpdateDateText();
             }
         }
