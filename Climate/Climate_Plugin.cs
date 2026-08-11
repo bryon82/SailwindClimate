@@ -11,7 +11,7 @@ namespace Climate
     {
         public const string PLUGIN_GUID = "com.raddude.climate";
         public const string PLUGIN_NAME = "Climate";
-        public const string PLUGIN_VERSION = "1.4.2";
+        public const string PLUGIN_VERSION = "1.4.3";
 
         internal static Climate_Plugin Instance { get; private set; }
         private static ManualLogSource _logger;

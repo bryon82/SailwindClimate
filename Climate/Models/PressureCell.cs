@@ -56,7 +56,7 @@ namespace Climate
 
                 // Steer velocity toward the large-scale wind at this cell's spawn point.
                 var windSample = WindService.SampleWind(lat, lon);
-                var windDirLatLon = new Vector2(windSample.normalized.x, windSample.normalized.z);
+                var windDirLatLon = new Vector2(windSample.normalized.z, windSample.normalized.x);
                 var randomDirLatLon = new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)).normalized;
 
                 var steeredDir = windDirLatLon.sqrMagnitude > 0.0001f
