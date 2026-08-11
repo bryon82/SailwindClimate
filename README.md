@@ -54,6 +54,7 @@ The values read from the barometer are based on pressure cells and how close you
 * The length of the year. This affects when seasons happen.
 * Enable/disable custom trade winds.
 * The maximum wind speed for trade winds.
+* The maximum wind speed contribution by pressure cells.
 * The stability of the wind.
 
 ## For Other Mod Authors

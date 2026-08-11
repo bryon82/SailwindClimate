@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 ## [v1.4.1] - 2026-08-10
 
 ### Added
+- Oasis pressure system.
+- Config for max pressure cell wind contribution.
+
+### Fixed
+- Bug affecting pressure cell wind contribution.
+
+## [v1.4.1] - 2026-08-10
+
+### Added
 - Market stalls in GRC, Ft. Aestrin, and Dragon Cliffs and moved the barometer, thermometer, and hygrometer to them.
 
 ### Fixed
