@@ -11,8 +11,8 @@ namespace Climate.Patches
             [HarmonyPatch("SaveModData")]
             public static void SaveModData()
             {
-                PressureCell.SavePressureCells();
                 PressureSystem.SavePressureSystems();
+                PressureCell.SavePressureCells();
             }
 
             [HarmonyPrefix]

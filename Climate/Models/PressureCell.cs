@@ -16,25 +16,22 @@ namespace Climate
         internal int spawnDay;
         internal int lifespanDays;
 
+        public static int maxPressureCells = 6;
         public static int maxSpawnLatitude = 42;
         public static int minSpawnLatitude = 28;
         public static int maxSpawnLongitude = 6;
         public static int minSpawnLongitude = -6;
 
+        const float WIND_CELL_GRADIENT_SCALE = 20f;
+        const float WIND_CELL_SAMPLE_DIST = 1f;
+
         const float PRESSURE_MOISTURE_CORRELATION = 0.6f; // 0 = independent, 1 = fully linked
-        const float INTENSITY_SCALE = 1.5f;
+        const float INTENSITY_SCALE = 1.7f;
         const float MOIST_MAX = 10f;  // strongly cyclonic -> strongly moist advection
         const float DRY_MAX = -5f;   // strongly anticyclonic -> dry subsiding air
 
-        const float PRESSURE_HIGH_LAT = 40f;
-        const float PRESSURE_LOW_LAT = 31f;
-        const float PRESSURE_BAND_SEASONAL_SHIFT = 2f;   // degrees the low-band migrates with season
         const float SPAWN_BIAS_STRENGTH = 0.5f; // 0 = fully random, 1 = fully deterministic
-        const float LARGE_SCALE_ANOMALY_SCALE = 5f; // roughly matches the systems' typical |amplitude|
-
         const float WIND_STEERING_STRENGTH = 0.8f; // 0 = pure independent drift, 1 = fully wind-steered
-        public static int maxPressureCells = 6;
-
 
         internal static readonly List<PressureCell> cells = new List<PressureCell>();
 
@@ -44,36 +41,11 @@ namespace Climate
 
             while (cells.Count < maxPressureCells)
             {
-                //// shared "cyclonicity" factor: +1 = strongly cyclonic (low, moist), -1 = strongly anticyclonic (high, dry)
-                //var cyclonicity = Random.Range(-1f, 1f);
-                //var independentIntensity = Random.Range(-1f, 1f);
-                //var independentMoisture = Random.Range(-1f, 1f);
-
-                //var intensityRaw = -cyclonicity * PRESSURE_MOISTURE_CORRELATION
-                //                  + independentIntensity * (1f - PRESSURE_MOISTURE_CORRELATION);
-                //var moistureRaw = cyclonicity * PRESSURE_MOISTURE_CORRELATION
-                //                 + independentMoisture * (1f - PRESSURE_MOISTURE_CORRELATION);
-
-                //var newCell = new PressureCell
-                //{
-                //    origin = new Vector2(Random.Range(28f, 42f), Random.Range(-6f, 6f)),
-                //    velocity = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)),
-                //    radius = Random.Range(4f, 9f),
-                //    intensity = intensityRaw * INTENSITY_SCALE,
-                //    moistureDelta = moistureRaw >= 0f
-                //        ? Mathf.Lerp(0f, MOIST_MAX, moistureRaw)
-                //        : Mathf.Lerp(0f, DRY_MAX, -moistureRaw),
-                //    spawnDay = GameState.day,
-                //    lifespanDays = Random.Range(2, 5)
-                //};
-
-                //cells.Add(newCell);
-
                 var lat = Random.Range(minSpawnLatitude, maxSpawnLatitude);
                 var lon = Random.Range(minSpawnLongitude, maxSpawnLongitude);
 
-                var pressureSystemInfluence = PressureSystem.GetPressureSystemInfluence(lon, lat, GameState.day);
-                var preferredCyclonicity = Mathf.Clamp(-pressureSystemInfluence / LARGE_SCALE_ANOMALY_SCALE, -1f, 1f);
+                var pressureSystemInfluence = PressureSystem.GetPressureSystemInfluence(lat, lon, GameState.day);
+                var preferredCyclonicity = Mathf.Clamp(-pressureSystemInfluence / maxWindSpeed.Value, -1f, 1f);
                 var randomCyclonicity = Random.Range(-1f, 1f);
                 var cyclonicity = Mathf.Lerp(randomCyclonicity, preferredCyclonicity, SPAWN_BIAS_STRENGTH);
 
@@ -83,8 +55,8 @@ namespace Climate
                 var moistureRaw = cyclonicity * PRESSURE_MOISTURE_CORRELATION + independentMoisture * (1f - PRESSURE_MOISTURE_CORRELATION);
 
                 // Steer velocity toward the large-scale wind at this cell's spawn point.
-                var windSample = WindService.SampleWind(lon, lat);
-                var windDirLatLon = new Vector2(windSample.normalized.z, windSample.normalized.x); // (lat,lon) - matches PressureCell convention
+                var windSample = WindService.SampleWind(lat, lon);
+                var windDirLatLon = new Vector2(windSample.normalized.x, windSample.normalized.z);
                 var randomDirLatLon = new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)).normalized;
 
                 var steeredDir = windDirLatLon.sqrMagnitude > 0.0001f
@@ -111,6 +83,17 @@ namespace Climate
             }
         }
 
+        internal static Vector3 GetWindContribution(Vector3 coords)
+        {
+            float P(Vector3 offset) => PressureService.GetPressure(coords + offset, GameState.day, false);
+
+            var gradLat = (P(new Vector3(0, 0, WIND_CELL_SAMPLE_DIST)) - P(new Vector3(0, 0, -WIND_CELL_SAMPLE_DIST))) / (2f * WIND_CELL_SAMPLE_DIST);
+            var gradLon = (P(new Vector3(WIND_CELL_SAMPLE_DIST, 0, 0)) - P(new Vector3(-WIND_CELL_SAMPLE_DIST, 0, 0))) / (2f * WIND_CELL_SAMPLE_DIST);
+            var smallScale = Vector3.ClampMagnitude(new Vector3(-gradLat, 0f, gradLon) * WIND_CELL_GRADIENT_SCALE, pressureCellmaxWindContr.Value);
+
+            return smallScale;
+        }
+
         string IModDataSaveable.SaveString()
         {
             System.FormattableString fs = $"{origin.x}|{origin.y}|{velocity.x}|{velocity.y}|{radius}|{intensity}|{moistureDelta}|{spawnDay}|{lifespanDays}";
@@ -128,6 +111,13 @@ namespace Climate
 
             if (cells.Count < maxPressureCells)
                 UpdatePressureCells();
+        }
+
+        public static void CheckPressureCellWindContribution()
+        {
+            var coords = FloatingOriginManager.instance.GetGlobeCoords(Refs.observerMirror.transform);
+            var contribution = GetWindContribution(coords);            
+            LogDebug($"PressureCell wind contribution at lat: {coords.z} lon: {coords.x} - direction: {contribution.normalized} {WindService.GetWindDirectionDegrees(contribution.normalized)} magnitude: {contribution.magnitude}");
         }
     }
 }

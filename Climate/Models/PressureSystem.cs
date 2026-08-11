@@ -79,6 +79,12 @@ namespace Climate
                 new PressureSystemParams(10f, 5f, -3f, 20f, 15f, -10f),
                 new PressureSystemParams(10f, 20f, -7f, 20f, 15f, 10f),
                 posWiggle: 3f, ampWiggle: 1f),
+
+            // Oasis
+            new PressureSystem(
+                new PressureSystemParams(-2f, 33f, -3.5f, 5f, 5f, 0f),
+                new PressureSystemParams(-5f, 35f, 0f, 5f, 5f, 0f),
+                posWiggle: 3f, ampWiggle: 1f),
         };
 
         internal PressureSystem(PressureSystemParams winter, PressureSystemParams summer,
@@ -167,7 +173,7 @@ namespace Climate
                 system.UpdateWiggles();
         }
 
-        internal static float GetPressureSystemInfluence(float lon, float lat, int day)
+        internal static float GetPressureSystemInfluence(float lat, float lon, int day)
         {
             var total = 0f;
             foreach (var system in systems)
@@ -198,23 +204,30 @@ namespace Climate
         internal static void LoadPressureSystems()
         {
             var loadedSystems = ModData.GetPressureSystemListEntry($"{PLUGIN_GUID}.PressureSystems");
-            if (loadedSystems.Count == systems.Count)
+            var loadCount = systems.Count;
+            if (systems.Count > loadedSystems.Count)
             {
-                for (int i = 0; i < systems.Count; i++)
-                {
-                    var loaded = loadedSystems[i];
-                    var system = systems[i];
-                    system.dx = loaded.dx;
-                    system.dy = loaded.dy;
-                    system.da = loaded.da;
-                }
+                loadCount = loadedSystems.Count;
+                LogWarning($"Loaded {loadCount} pressure systems, expected {systems.Count}. Non-loaded pressure systems will use default values.");
             }
-            else
+            for (int i = 0; i < loadCount; i++)
             {
-                LogWarning($"Loaded {loadedSystems.Count} systems, expected {systems.Count}. Using default.");
+                var loaded = loadedSystems[i];
+                var system = systems[i];
+                system.dx = loaded.dx;
+                system.dy = loaded.dy;
+                system.da = loaded.da;
             }
 
             WindService.UpdateDailyWindField();
+        }
+
+        internal static void CheckPressureSystemInfluence()
+        {
+            var coords = FloatingOriginManager.instance.GetGlobeCoords(Refs.observerMirror.transform);
+            var contribution = GetPressureSystemInfluence(coords.z, coords.x, GameState.day);
+
+            LogDebug($"PressureSystem pressure influence at lat: {coords.z} lon: {coords.x} - influence: {contribution}");
         }
     }
 }

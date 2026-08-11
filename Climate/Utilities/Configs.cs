@@ -8,16 +8,19 @@ namespace Climate
         internal static ConfigEntry<bool> enableWinds;
         internal static ConfigEntry<int> maxWindSpeed;
         internal static ConfigEntry<float> windStability;
+        internal static ConfigEntry<int> pressureCellmaxWindContr;
 
         internal static void InitializeConfigs()
         {
             var config = Climate_Plugin.Instance.Config;
 
+            var yearLengthDesc =
+                "The length of a year in days. Affects the length of seasons and the timing of weather patterns.";
             yearLength = config.Bind(
                 "Settings",
                 "Days In A Year",
                 92,
-                new ConfigDescription("The length of a year in days.", new AcceptableValueList<int>(92, 365)));
+                new ConfigDescription(yearLengthDesc, new AcceptableValueList<int>(92, 365)));
 
             enableWinds = config.Bind(
                 "Settings",
@@ -32,8 +35,16 @@ namespace Climate
             maxWindSpeed = config.Bind(
                 "Wind Settings",
                 "Maximum Trade Wind Speed",
-                20,
+                22,
                 new ConfigDescription(windSpeedDesc, new AcceptableValueRange<int>(1, 40)));
+
+            var pressureCellMaxContrDesc =
+                "This is the maximum wind speed that can be added to the base trade winds from a pressure cell.";
+            pressureCellmaxWindContr = config.Bind(
+                "Wind Settings",
+                "Pressure Cell Max Wind Contribution",
+                8,
+                new ConfigDescription(pressureCellMaxContrDesc, new AcceptableValueRange<int>(1, 20)));
 
             var stabilityDesc =
                 "A value of 0 means the winds are completely chaotic, while a value of 1 means the winds will " +

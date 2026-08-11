@@ -21,6 +21,9 @@ namespace Climate
         public static void WriteWindGridToFile() => WindService.WriteWindGridToFile();
         public static void WriteWindGridNormalizedToFile() => WindService.WriteWindGridToFile(normalized: true);
         public static void WriteWindGridMagnitudeToFile() => WindService.WriteWindGridToFile(magnitude: true);
+        public static void WriteWindGridDegreesToFile() => WindService.WriteWindGridToFile(degrees: true);
         public static void CheckWindVector() => WindService.CheckWindVector();
+        public static void CheckPressureCellWindContribution() => PressureCell.CheckPressureCellWindContribution();
+        public static void CheckPressureSystemInfluence() => PressureSystem.CheckPressureSystemInfluence();
     }
 }
