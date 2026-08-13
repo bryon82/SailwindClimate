@@ -156,40 +156,49 @@ namespace Climate
                 var combinedWind = pressureSystemWind + pressureCellWind;
 
                 // --- Wind Chaos ---
-                var directionChaos = Weather.instance.currentRegion.windDirChaos;
-                var magnitudeChaos = Weather.instance.currentRegion.windChaos;
-                var vector = Vector3.Lerp(new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized, combinedWind.normalized, windStability.Value);
-                var vectorAdj = Vector3.Lerp(Wind.currentBaseWind.normalized, vector.normalized, directionChaos).normalized;
+                var region = Weather.instance.currentRegion;
+                var directionChaos = region.windDirChaos;
+                var magnitudeChaos = region.windChaos;
 
-                var num = Random.Range(combinedWind.magnitude - magnitudeChaos, combinedWind.magnitude + magnitudeChaos);
-                if (num < windInstance.minimumMagnitude)
-                    num = windInstance.minimumMagnitude;
-                else if (num > maxWindSpeed.Value)
-                    num = maxWindSpeed.Value;
+                var randomDirection = Random.insideUnitSphere;
+                randomDirection.y = 0f;
+                randomDirection.Normalize();
 
-                Wind.currentBaseWind = vectorAdj * num;
+                var newWindVector = Vector3.Lerp(randomDirection, combinedWind.normalized, windStability.Value);
+                var windVector = Vector3.Lerp(Wind.currentBaseWind.normalized, newWindVector, directionChaos).normalized;
+
+                var windMagnitude = Mathf.Clamp(
+                    Random.Range(combinedWind.magnitude - magnitudeChaos, combinedWind.magnitude + magnitudeChaos),
+                    windInstance.minimumMagnitude,
+                    maxWindSpeed.Value);
+
+                var newBaseWind = windVector * windMagnitude;
+                Wind.currentBaseWind = newBaseWind;
                 windInstance.outCurrentBaseWind = Wind.currentBaseWind;
 
                 // --- Adjust Wind Magnitude For Storm/Land Distance ---
-                var adjSum = 0f;
-
                 var stormDist = Mathf.InverseLerp(13000f, 500f, WeatherStorms.currentStormDistance);
                 var stormInfluence = 26f * stormDist;
-                adjSum += stormInfluence;
-                if (stormInfluence > 0f)
-                    LogInfo($"Wind: storm magnitude is {stormInfluence} lerp is {stormDist}");
 
                 var landDist = Mathf.InverseLerp(1500f, 4000f, GameState.distanceToLand);
                 var landInfluence = combinedWind.magnitude * landDist * 0.66f;
-                adjSum += landInfluence;
+
+                var adjSum = Mathf.Min(stormInfluence + landInfluence, 20f);
+
+                if (stormInfluence > 0f)
+                    LogInfo($"Wind: storm magnitude is {stormInfluence} lerp is {stormDist}");
+
                 if (landDist > 0f)
                     LogInfo($"Wind: ocean magnitude is {landInfluence} lerp is {landDist}");
 
-                if (adjSum > 20f)
-                    adjSum = 20f;
-
                 var windTarget = Wind.currentBaseWind.normalized * (Wind.currentBaseWind.magnitude + adjSum);
                 ___currentWindTarget = windTarget;
+
+                DebugProps.PressureSystemWind = WindService.WindString(pressureSystemWind);
+                DebugProps.PressureCellWind = WindService.WindString(pressureCellWind);
+                DebugProps.BaseWind = WindService.WindString(newBaseWind);
+                DebugProps.StormWindMagnitude = $"{stormInfluence:F2}";
+                DebugProps.LandDistWindMagnitude = $"{landInfluence:F2}";
 
                 return false;
             }

@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.4.1] - 2026-08-10
+## [v1.5.0] - 2026-08-13
+
+### Added
+- Seasonal wind maps to stalls in Gold Rock City, Dragon Cliffs, and Ft. Aestrin.
+
+### Updated
+- Refactored wind chaos code.
+
+## [v1.4.3] - 2026-08-10
 
 ### Added
 - Oasis pressure system.

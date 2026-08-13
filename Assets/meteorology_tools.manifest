@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1625678895
+CRC: 3108900900
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3960225c65e762bcb6fb25403a8a4fbb
+    Hash: e3287c8d5567a5fb1f156a38dd120305
   TypeTreeHash:
     serializedVersion: 2
-    Hash: b6cf81aea046d762ef83531e7118c53e
+    Hash: 9dc37a2784f9eab6e97d26895e5b9e76
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -29,12 +29,21 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 65
   Script: {instanceID: 0}
+- Class: 84
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6b1904d0a2c2ae34e8b93139f52d0e9d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: bb25b97158ae92443a37254f8fe9e585, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c8c96a2446b8ecd49abdb5d6a6702cd4, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 Assets:
+- Assets/Custom/summer wind map.prefab
 - Assets/Custom/thermometer.prefab
 - Assets/Custom/hygrometer.prefab
 - Assets/Custom/barometer.prefab
+- Assets/Custom/spring & autumn wind map.prefab
+- Assets/Custom/winter wind map.prefab
 Dependencies: []

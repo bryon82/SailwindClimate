@@ -47,6 +47,9 @@ namespace Climate
             MakeShopItem("shop item 320", scenery.transform, new Vector3(1546.15f, 7.026f, -360.72f), new Vector3(78.5f, 325f, 0f), Items.Barometer);
             MakeShopItem("shop item 321", scenery.transform, new Vector3(1546.2f, 6.836f, -361.8f), new Vector3(78.5f, 325f, 0f), Items.Thermometer);
             MakeShopItem("shop item 322", scenery.transform, new Vector3(1547.1f, 6.836f, -361.2f), new Vector3(78.5f, 325f, 0f), Items.Hygrometer);
+            MakeShopItem("shop item 323", scenery.transform, new Vector3(1543.35f, 8.196f, -361.9f), new Vector3(0f, 328f, 0f), Items.WinterWindMap);
+            MakeShopItem("shop item 324", scenery.transform, new Vector3(1546.2f, 6.97f, -361f), new Vector3(77f, 328f, 20f), Items.SpringAutumnWindMap);
+            MakeShopItem("shop item 325", scenery.transform, new Vector3(1546.1f, 8.196f, -360.18f), new Vector3(0f, 328f, 0f), Items.SummerWindMap);
         }
 
         internal static void FortAestrin()
@@ -84,6 +87,9 @@ namespace Climate
             MakeShopItem("shop item (320)", scenery.transform, new Vector3(-48.447f, 2.95f, 44.35f), new Vector3(77f, 180f, 0f), Items.Barometer);
             MakeShopItem("shop item (321)", scenery.transform, new Vector3(-48.166f, 2.85f, 44.82f), new Vector3(77f, 180f, 0f), Items.Thermometer);
             MakeShopItem("shop item (322)", scenery.transform, new Vector3(-48.716f, 2.85f, 44.82f), new Vector3(77f, 180f, 0f), Items.Hygrometer);
+            MakeShopItem("shop item (323)", scenery.transform, new Vector3(-46.7f, 4.5f, 42.75f), new Vector3(0f, 180f, 0f), Items.WinterWindMap);
+            MakeShopItem("shop item (324)", scenery.transform, new Vector3(-47.75f, 4.5f, 42.75f), new Vector3(0f, 180f, 0f), Items.SpringAutumnWindMap);
+            MakeShopItem("shop item (325)", scenery.transform, new Vector3(-48.8f, 4.5f, 42.75f), new Vector3(0f, 180f, 0f), Items.SummerWindMap);
         }
 
         internal static void DragonCliffs()
@@ -108,6 +114,9 @@ namespace Climate
             MakeShopItem("shop item spawner (320)", scenery.transform, new Vector3(-73.474f, 4.6f, -552.5f), new Vector3(76f, 140f, 0f), Items.Barometer);
             MakeShopItem("shop item spawner (321)", scenery.transform, new Vector3(-73.574f, 4.502f, -552f), new Vector3(76f, 140f, 0f), Items.Thermometer);
             MakeShopItem("shop item spawner (322)", scenery.transform, new Vector3(-73.974f, 4.502f, -552.4f), new Vector3(76f, 140f, 0f), Items.Hygrometer);
+            MakeShopItem("shop item spawner (323)", scenery.transform, new Vector3(-73.2f, 4.1f, -551.15f), new Vector3(0f, 135f, 0f), Items.WinterWindMap);
+            MakeShopItem("shop item spawner (324)", scenery.transform, new Vector3(-73.584f, 4.58f, -552.4f), new Vector3(78f, 135f, 20f), Items.SpringAutumnWindMap);
+            MakeShopItem("shop item spawner (325)", scenery.transform, new Vector3(-74.07f, 4.1f, -552.02f), new Vector3(0f, 135f, 0f), Items.SummerWindMap);
         }
 
         private static void MakeShopItem(string name, Transform parent, Vector3 position, Vector3 rotation, GameObject go)

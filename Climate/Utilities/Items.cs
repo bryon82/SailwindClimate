@@ -7,6 +7,9 @@ namespace Climate
         public static GameObject Barometer { get; internal set; }
         public static GameObject Thermometer { get; internal set; }
         public static GameObject Hygrometer { get; internal set; }
+        public static GameObject WinterWindMap { get; internal set; }
+        public static GameObject SpringAutumnWindMap { get; internal set; }
+        public static GameObject SummerWindMap { get; internal set; }
 
         internal static void InitializeBarometer()
         {

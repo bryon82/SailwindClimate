@@ -49,8 +49,19 @@ namespace Climate
             Items.Barometer = request.allAssets.FirstOrDefault(a => a.name == "barometer") as GameObject;
             Items.Thermometer = request.allAssets.FirstOrDefault(a => a.name == "thermometer") as GameObject;
             Items.Hygrometer = request.allAssets.FirstOrDefault(a => a.name == "hygrometer") as GameObject;
+            Items.WinterWindMap = request.allAssets.FirstOrDefault(a => a.name == "winter wind map") as GameObject;
+            Items.SpringAutumnWindMap = request.allAssets.FirstOrDefault(a => a.name == "spring & autumn wind map") as GameObject;
+            Items.SummerWindMap = request.allAssets.FirstOrDefault(a => a.name == "summer wind map") as GameObject;
 
-            if (Items.Barometer == null || Items.Thermometer == null || Items.Hygrometer == null)
+            var isItemNotLoaded = 
+                Items.Barometer == null
+                || Items.Thermometer == null
+                || Items.Hygrometer == null
+                || Items.WinterWindMap == null
+                || Items.SpringAutumnWindMap == null
+                || Items.SummerWindMap == null;
+
+            if (isItemNotLoaded)
             {
                 LogError("Failed to load all required assets from the bundle");
                 yield break;

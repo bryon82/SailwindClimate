@@ -144,6 +144,9 @@ namespace Climate
             return angle;
         }
 
+        internal static string WindString(Vector3 wind) => 
+            $"{GetWindDirectionDegrees(wind.normalized):F2} {wind.magnitude:F2}";
+
         private static string GetWindArrow(Vector3 dir)
         {
             var angle = GetWindDirectionDegrees(dir);
