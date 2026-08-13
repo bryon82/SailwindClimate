@@ -16,8 +16,9 @@ Ocean maps with the trade winds of each season can be bought in Gold Rock City, 
 
 The in game maps use [wind barbs](https://www.weather.gov/hfo/windbarbinfo) to depict the wind. The barbs on the map do not represent a fixed wind speed; for example, one long barb does not necessarily equal 10 knots. Wind speed is determined by multiple factors, so the barbs are best viewed as representing wind speeds relative to one another.  
 
+Trade Winds
 
-
+https://github.com/user-attachments/assets/f29b0331-f418-4c01-b760-45e2ad37e248
 
 Winter Trade Winds  
 <img src="https://github.com/bryon82/SailwindClimate/blob/main/Screenshots/winterWinds.png" alt="Winter Trade Winds" width="600" height="400">  
